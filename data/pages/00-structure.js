@@ -94,8 +94,8 @@
       fr: { term: 'Variance WSOS', aliases: ['variance'], def: 'Écart entre la répartition des points voulue par les WSOS et celle du barème. L’objectif est une variance proche de 0 %.' },
       en: { term: 'WSOS variance', aliases: ['variance'], def: 'Difference between the mark distribution required by the WSOS and the one in the marking scheme. The goal is a variance close to 0%.' } },
     { id: 'max-mark', page: 'excel-marking-scheme',
-      fr: { term: 'Max Mark', aliases: [], def: 'Note maximale d’un aspect. La somme des Max Mark de tous les aspects doit faire 100.' },
-      en: { term: 'Max Mark', aliases: [], def: 'Maximum mark of an aspect. The Max Marks of all aspects must add up to 100.' } },
+      fr: { term: 'Max Mark', aliases: [], def: 'Note maximale d’un aspect : 2 points au maximum. La somme des Max Mark de tous les aspects doit faire 100.' },
+      en: { term: 'Max Mark', aliases: [], def: 'Maximum mark of an aspect: 2 marks at most. The Max Marks of all aspects must add up to 100.' } },
     { id: 'draft', page: 'lock-marking-scheme',
       fr: { term: 'Draft', aliases: [], def: 'Filigrane « Draft » imprimé sur les feuilles de notation tant que le barème n’est pas verrouillé.' },
       en: { term: 'Draft', aliases: [], def: '“Draft” watermark printed on marking forms as long as the marking scheme is not locked.' } }

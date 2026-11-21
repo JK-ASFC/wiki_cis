@@ -87,7 +87,7 @@
     }),
     T('Coiffure', 'Hairdressing', {
       pf: ['Le client est protégé (cape, serviette)', 'Pass / Fail', 'The client is protected (cape, towel)', 'Pass / Fail'],
-      ch: ['Couleur obtenue : conforme / proche / hors demande', 'Déduction 0 / 1 / 3 points', 'Colour result: as requested / close / off', 'Deduction 0 / 1 / 3 marks'],
+      ch: ['Couleur obtenue : conforme / proche / hors demande', 'Déduction 0 / 1 / 2 points', 'Colour result: as requested / close / off', 'Deduction 0 / 1 / 2 marks'],
       nc: ['Éléments de la coupe imposée réalisés', 'Number Possible = 6', 'Required haircut elements completed', 'Number Possible = 6'],
       rg: ['Longueur de coupe à la nuque', 'Cible 30 mm ; ±3 → 0 ; ±6 → −0,5', 'Cut length at the nape', 'Target 30 mm; ±3 → 0; ±6 → −0.5'],
       ps: ['Temps de réalisation du chignon', 'Highest Mark to Lowest Value, Maximum Value = 45 min', 'Time to complete the updo', 'Highest Mark to Lowest Value, Maximum Value = 45 min']
@@ -303,7 +303,7 @@
     }),
     T('Radioprotection en environnement nucléaire', 'Radiation Protection in Nuclear Environment', {
       pf: ['Le contrôle de non-contamination est réalisé en sortie', 'Pass / Fail', 'Exit contamination check is performed', 'Pass / Fail'],
-      ch: ['Habillage de la tenue : conforme / écart mineur / écart majeur', 'Déduction 0 / 1 / 3 points', 'Protective suit dressing: compliant / minor deviation / major deviation', 'Deduction 0 / 1 / 3 marks'],
+      ch: ['Habillage de la tenue : conforme / écart mineur / écart majeur', 'Déduction 0 / 1 / 2 points', 'Protective suit dressing: compliant / minor deviation / major deviation', 'Deduction 0 / 1 / 2 marks'],
       nc: ['Points de mesure du plan de zonage relevés', 'Number Possible = 10', 'Zoning plan measuring points recorded', 'Number Possible = 10'],
       rg: ['Débit de dose mesuré', 'Cible 25 µSv/h ; ±1 → 0 ; ±3 → −0,5', 'Measured dose rate', 'Target 25 µSv/h; ±1 → 0; ±3 → −0.5'],
       ps: ['Dose reçue pendant l’intervention', 'Highest Mark to Lowest Value', 'Dose received during the task', 'Highest Mark to Lowest Value']

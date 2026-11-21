@@ -214,12 +214,12 @@ window.WIKI_TOUR = {
    "ch": "prepare",
    "fr": {
     "t": "Zone 2 : les critères",
-    "x": "Écrivez le **nom** de chaque critère (A, B, C…) en colonne B et son **total de points** en colonne K.",
+    "x": "Écrivez le **nom** de chaque critère (A, B, C…) en colonne B et son **total de points** en colonne K (la somme de ses aspects, chacun à 2 points maximum).",
     "tip": "Le total des critères doit faire 100."
    },
    "en": {
     "t": "Area 2: criteria",
-    "x": "Write the **name** of each criterion (A, B, C…) in column B and its **total marks** in column K.",
+    "x": "Write the **name** of each criterion (A, B, C…) in column B and its **total marks** in column K (the sum of its aspects, each 2 marks at most).",
     "tip": "Criteria must add up to 100."
    },
    "img": "excel",
@@ -340,11 +340,13 @@ window.WIKI_TOUR = {
    "ch": "prepare",
    "fr": {
     "t": "La note maximale",
-    "x": "En colonne K, la **note maximale** de l’aspect. La somme de toutes les notes max doit faire **100**."
+    "x": "En colonne K, la **note maximale** de l’aspect : **2 points au maximum** par aspect. La somme de toutes les notes max doit faire **100**.",
+    "tip": "Un élément plus important ? Découpez-le en plusieurs aspects de 2 points maximum."
    },
    "en": {
     "t": "The max mark",
-    "x": "In column K, the aspect’s **max mark**. All max marks must add up to **100**."
+    "x": "In column K, the aspect’s **max mark**: **2 marks at most** per aspect. All max marks must add up to **100**.",
+    "tip": "A bigger item? Split it into several aspects of 2 marks at most."
    },
    "img": "excel",
    "w": 2174,
@@ -360,11 +362,13 @@ window.WIKI_TOUR = {
    "ch": "prepare",
    "fr": {
     "t": "Un aspect « Judgement »",
-    "x": "Pour un aspect jugé par les jurés : **J** en colonne D, puis **4 lignes** dessous avec les scores **0, 1, 2, 3** (colonne F) et leur description (colonne G)."
+    "x": "Pour un aspect jugé par les jurés : **J** en colonne D, puis **4 lignes** dessous avec les scores **0, 1, 2, 3** (colonne F) et leur description (colonne G).",
+    "tip": "Dans ce fichier d’exemple, l’aspect vaut 3 points : c’est une erreur. **2 points maximum** par aspect."
    },
    "en": {
     "t": "A “Judgement” aspect",
-    "x": "For an aspect judged by jurors: **J** in column D, then **4 rows** below with scores **0, 1, 2, 3** (column F) and their description (column G)."
+    "x": "For an aspect judged by jurors: **J** in column D, then **4 rows** below with scores **0, 1, 2, 3** (column F) and their description (column G).",
+    "tip": "In this example file the aspect is worth 3 marks: that is an error. **2 marks at most** per aspect."
    },
    "img": "excel",
    "w": 2174,
@@ -542,11 +546,13 @@ window.WIKI_TOUR = {
    "ch": "check",
    "fr": {
     "t": "Le total doit faire 100",
-    "x": "Vérifiez le **Criterion Total** : il doit être exactement **100.00**."
+    "x": "Vérifiez le **Criterion Total** : il doit être exactement **100.00**.",
+    "tip": "Vérifiez aussi qu’aucun aspect ne dépasse **2 points**."
    },
    "en": {
     "t": "The total must be 100",
-    "x": "Check the **Criterion Total**: it must be exactly **100.00**."
+    "x": "Check the **Criterion Total**: it must be exactly **100.00**.",
+    "tip": "Also check that no aspect exceeds **2 marks**."
    },
    "img": "ms-criteria",
    "w": 1280,
@@ -624,11 +630,11 @@ window.WIKI_TOUR = {
    "ch": "check",
    "fr": {
     "t": "Les aspects Measurement",
-    "x": "Puis les aspects **M**, avec leur **Requirement** et leur note max. Vérifiez que chaque valeur attendue est bien un nombre."
+    "x": "Puis les aspects **M**, avec leur **Requirement** et leur note max. Vérifiez que chaque valeur attendue est bien un nombre et que chaque note max est de **2 points au maximum**."
    },
    "en": {
     "t": "Measurement aspects",
-    "x": "Then the **M** aspects, with their **Requirement** and max mark. Check that every expected value is a number."
+    "x": "Then the **M** aspects, with their **Requirement** and max mark. Check that every expected value is a number and every max mark is **2 at most**."
    },
    "img": "ms-aspects",
    "w": 1100,

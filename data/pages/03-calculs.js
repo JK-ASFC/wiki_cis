@@ -99,7 +99,8 @@ Ce wiki propose aussi un **simulateur** sur chaque page de méthode : il reprodu
 ## Les règles vérifiées dans le CIS
 
 > [!IMPORTANT] À retenir
-> - Les notes sont **arrondies à 2 décimales** (4,875 → 4,88).
+> - **Un aspect vaut 2 points maximum** (Max Mark ≤ 2). Pour un élément plus important, découpez-le en plusieurs aspects.
+> - Les notes sont **arrondies à 2 décimales** (1,875 → 1,88).
 > - Une note n'est jamais **négative** ni supérieure à la Max Mark.
 > - Pour utiliser le **Requirement** comme cible, il doit contenir un **nombre seul**. « 300mm +- 15mm » est ignoré : le calcul ne donne rien et le message « *Target value missing from calculation* » apparaît.
 > - Méthodes **comparatives** : si **une seule** valeur manque ou n'est pas un nombre, **aucune** note n'est calculée. Un **0** est une vraie valeur (il compte dans la comparaison).`
@@ -194,7 +195,8 @@ This wiki also offers a **simulator** on each method page: it reproduces CIS cal
 ## Rules checked in the CIS
 
 > [!IMPORTANT] Remember
-> - Marks are **rounded to 2 decimals** (4.875 → 4.88).
+> - **An aspect is worth 2 marks at most** (Max Mark ≤ 2). For a bigger item, split it into several aspects.
+> - Marks are **rounded to 2 decimals** (1.875 → 1.88).
 > - A mark is never **negative** nor above the Max Mark.
 > - To use the **Requirement** as target, it must be a **plain number**. “300mm +- 15mm” is ignored: the calculation gives nothing and “*Target value missing from calculation*” appears.
 > - **Comparative** methods: if **a single** value is missing or not a number, **no** mark is calculated. A **0** is a real value (it counts in the comparison).`
@@ -220,19 +222,19 @@ This wiki also offers a **simulator** on each method page: it reproduces CIS cal
 | **Formule** | Pass → **Max Mark** · Fail → **0** |
 | **Compare les compétiteurs** | Non |
 
-![Pass/Fail dans le CIS : testé avec une Max Mark de 8](assets/img/cis/calc-pass-fail.png)
+![Pass/Fail dans le CIS : testé avec une Max Mark de 2](assets/img/cis/calc-pass-fail.png)
 
 ## Exemple vérifié dans le CIS
 
-Bonhomme de neige, *H1 – Les concurrents ont utilisé les vêtements chauds appropriés à tout moment*, Max Mark = 8 :
+Bonhomme de neige, *H1 – Les concurrents ont utilisé les vêtements chauds appropriés à tout moment*, Max Mark = 2 :
 
 | Compétiteur | Saisie | Note CIS |
 |---|---|---:|
-| 1 | Pass | 8,00 |
+| 1 | Pass | 2,00 |
 | 2 | Fail | 0,00 |
-| 3 | Pass | 8,00 |
+| 3 | Pass | 2,00 |
 
-::calc[passfail]{"max":8,"values":["pass","fail","pass"]}
+::calc[passfail]{"max":2,"values":["pass","fail","pass"]}
 
 > [!TIP] Pass/Fail ou saisie directe ?
 > Sans calcul, un aspect M se note aussi en tapant ++y++ (note max) ou ++n++ (zéro). Pass/Fail rend le choix **explicite** pour le juré et sur les feuilles, ce qui évite les erreurs de frappe.
@@ -255,19 +257,19 @@ Bonhomme de neige, *H1 – Les concurrents ont utilisé les vêtements chauds ap
 | **Formula** | Pass → **Max Mark** · Fail → **0** |
 | **Compares competitors** | No |
 
-![Pass/Fail in the CIS: tested with a Max Mark of 8](assets/img/cis/calc-pass-fail.png)
+![Pass/Fail in the CIS: tested with a Max Mark of 2](assets/img/cis/calc-pass-fail.png)
 
 ## Example checked in the CIS
 
-Snowman, *H1 – Competitors wore appropriate warm clothing at all times*, Max Mark = 8:
+Snowman, *H1 – Competitors wore appropriate warm clothing at all times*, Max Mark = 2:
 
 | Competitor | Entry | CIS mark |
 |---|---|---:|
-| 1 | Pass | 8.00 |
+| 1 | Pass | 2.00 |
 | 2 | Fail | 0.00 |
-| 3 | Pass | 8.00 |
+| 3 | Pass | 2.00 |
 
-::calc[passfail]{"max":8,"values":["pass","fail","pass"]}
+::calc[passfail]{"max":2,"values":["pass","fail","pass"]}
 
 > [!TIP] Pass/Fail or direct entry?
 > Without a calculation, an M aspect can also be marked by typing ++y++ (max mark) or ++n++ (zero). Pass/Fail makes the choice **explicit** for the juror and on the forms, which avoids typing errors.
@@ -297,22 +299,22 @@ Snowman, *H1 – Competitors wore appropriate warm clothing at all times*, Max M
 | **Formule** | Note = Max Mark − déduction (en %, déduction = Max Mark × % ÷ 100) |
 | **Compare les compétiteurs** | Non |
 
-![Choice dans le CIS : 4 niveaux en pourcentage, Max Mark 6,5](assets/img/cis/calc-choice.png)
+![Choice dans le CIS : 4 niveaux en pourcentage, Max Mark 2](assets/img/cis/calc-choice.png)
 
 ## Exemple vérifié dans le CIS
 
-Bonhomme de neige, *C1 – Veste adaptée*, Max Mark = 6,5, déduction en **pourcentage** :
+Bonhomme de neige, *C1 – Veste adaptée*, Max Mark = 2, déduction en **pourcentage** :
 
 | Choix | Déduction | Calcul | Note CIS |
 |---|---:|---|---:|
-| Conforme | 0 % | 6,5 − 0 | 6,50 |
-| Défaut mineur | 25 % | 6,5 − 1,625 | **4,88** |
-| Défaut majeur | 50 % | 6,5 − 3,25 | 3,25 |
-| Absente | 100 % | 6,5 − 6,5 | 0,00 |
+| Conforme | 0 % | 2 − 0 | 2,00 |
+| Défaut mineur | 25 % | 2 − 0,5 | 1,50 |
+| Défaut majeur | 50 % | 2 − 1 | 1,00 |
+| Absente | 100 % | 2 − 2 | 0,00 |
 
 Le même principe en **nombre de points** (Max Mark = 2 ; déductions 0 / 0,5 / 1 / 2) donne 2,00 / 1,50 / 1,00 / 0,00.
 
-::calc[choice]{"max":6.5,"dtype":"percent","choices":[["Conforme",0],["Défaut mineur",25],["Défaut majeur",50],["Absente",100]],"values":["Conforme","Défaut mineur","Défaut majeur","Absente"]}
+::calc[choice]{"max":2,"dtype":"percent","choices":[["Conforme",0],["Défaut mineur",25],["Défaut majeur",50],["Absente",100]],"values":["Conforme","Défaut mineur","Défaut majeur","Absente"]}
 
 > [!TIP] Bien rédiger les choix
 > - Gardez des libellés **courts et observables** : « 1 à 2 défauts visibles » plutôt que « moyen ».
@@ -341,22 +343,22 @@ Le même principe en **nombre de points** (Max Mark = 2 ; déductions 0 / 0,5 / 
 | **Formula** | Mark = Max Mark − deduction (in %, deduction = Max Mark × % ÷ 100) |
 | **Compares competitors** | No |
 
-![Choice in the CIS: 4 levels in percentage, Max Mark 6.5](assets/img/cis/calc-choice.png)
+![Choice in the CIS: 4 levels in percentage, Max Mark 2](assets/img/cis/calc-choice.png)
 
 ## Example checked in the CIS
 
-Snowman, *C1 – Suitable jacket*, Max Mark = 6.5, **percentage** deduction:
+Snowman, *C1 – Suitable jacket*, Max Mark = 2, **percentage** deduction:
 
 | Choice | Deduction | Calculation | CIS mark |
 |---|---:|---|---:|
-| Compliant | 0% | 6.5 − 0 | 6.50 |
-| Minor defect | 25% | 6.5 − 1.625 | **4.88** |
-| Major defect | 50% | 6.5 − 3.25 | 3.25 |
-| Missing | 100% | 6.5 − 6.5 | 0.00 |
+| Compliant | 0% | 2 − 0 | 2.00 |
+| Minor defect | 25% | 2 − 0.5 | 1.50 |
+| Major defect | 50% | 2 − 1 | 1.00 |
+| Missing | 100% | 2 − 2 | 0.00 |
 
 The same idea in **number of marks** (Max Mark = 2; deductions 0 / 0.5 / 1 / 2) gives 2.00 / 1.50 / 1.00 / 0.00.
 
-::calc[choice]{"max":6.5,"dtype":"percent","choices":[["Compliant",0],["Minor defect",25],["Major defect",50],["Missing",100]],"values":["Compliant","Minor defect","Major defect","Missing"]}
+::calc[choice]{"max":2,"dtype":"percent","choices":[["Compliant",0],["Minor defect",25],["Major defect",50],["Missing",100]],"values":["Compliant","Minor defect","Major defect","Missing"]}
 
 > [!TIP] Writing good choices
 > - Keep labels **short and observable**: “1 to 2 visible defects” rather than “average”.
@@ -392,20 +394,21 @@ The same idea in **number of marks** (Max Mark = 2; deductions 0 / 0.5 / 1 / 2) 
 | **Formule** | Note = **valeur ÷ Number Possible × Max Mark** |
 | **Compare les compétiteurs** | Non |
 
-![Number Completed dans le CIS : 6 possibles, Max Mark 12](assets/img/cis/calc-number-completed.png)
+![Number Completed dans le CIS : 6 possibles, Max Mark 2](assets/img/cis/calc-number-completed.png)
 
 ## Exemple vérifié dans le CIS
 
-*F1 – Nombre de boutons posés sur la veste*, Number Possible = 6, Max Mark = 12 :
+*F1 – Nombre de boutons posés sur la veste*, Number Possible = 6, Max Mark = 2 :
 
 | Compétiteur | Boutons posés | Calcul | Note CIS |
 |---|---:|---|---:|
-| 1 | 6 | 6 ÷ 6 × 12 | 12,00 |
-| 2 | 5 | 5 ÷ 6 × 12 | 10,00 |
-| 3 | 3 | 3 ÷ 6 × 12 | 6,00 |
-| 4 | 0 | 0 ÷ 6 × 12 | 0,00 |
+| 1 | 6 | 6 ÷ 6 × 2 | 2,00 |
+| 2 | 5 | 5 ÷ 6 × 2 | 1,67 |
+| 3 | 4 | 4 ÷ 6 × 2 | 1,33 |
+| 4 | 3 | 3 ÷ 6 × 2 | 1,00 |
+| 5 | 0 | 0 ÷ 6 × 2 | 0,00 |
 
-::calc[completed]{"max":12,"possible":6,"values":[6,5,3,0]}
+::calc[completed]{"max":2,"possible":6,"values":[6,5,4,3,0]}
 
 > [!WARNING] Valeur trop grande
 > Une valeur **supérieure** au Number Possible ne donne **aucune note** (testé : 10 pour 8 possibles → case vide, message « *Value should be in range from 0 to 8* »). Vérifiez le Number Possible avant la compétition.
@@ -428,20 +431,21 @@ The same idea in **number of marks** (Max Mark = 2; deductions 0 / 0.5 / 1 / 2) 
 | **Formula** | Mark = **value ÷ Number Possible × Max Mark** |
 | **Compares competitors** | No |
 
-![Number Completed in the CIS: 6 possible, Max Mark 12](assets/img/cis/calc-number-completed.png)
+![Number Completed in the CIS: 6 possible, Max Mark 2](assets/img/cis/calc-number-completed.png)
 
 ## Example checked in the CIS
 
-*F1 – Number of buttons sewn on the jacket*, Number Possible = 6, Max Mark = 12:
+*F1 – Number of buttons sewn on the jacket*, Number Possible = 6, Max Mark = 2:
 
 | Competitor | Buttons | Calculation | CIS mark |
 |---|---:|---|---:|
-| 1 | 6 | 6 ÷ 6 × 12 | 12.00 |
-| 2 | 5 | 5 ÷ 6 × 12 | 10.00 |
-| 3 | 3 | 3 ÷ 6 × 12 | 6.00 |
-| 4 | 0 | 0 ÷ 6 × 12 | 0.00 |
+| 1 | 6 | 6 ÷ 6 × 2 | 2.00 |
+| 2 | 5 | 5 ÷ 6 × 2 | 1.67 |
+| 3 | 4 | 4 ÷ 6 × 2 | 1.33 |
+| 4 | 3 | 3 ÷ 6 × 2 | 1.00 |
+| 5 | 0 | 0 ÷ 6 × 2 | 0.00 |
 
-::calc[completed]{"max":12,"possible":6,"values":[6,5,3,0]}
+::calc[completed]{"max":2,"possible":6,"values":[6,5,4,3,0]}
 
 > [!WARNING] Value too high
 > A value **above** the Number Possible gives **no mark** (tested: 10 out of 8 possible → empty, message “*Value should be in range from 0 to 8*”). Check the Number Possible before the competition.

@@ -10,7 +10,7 @@
     tags: ['excel', 'fichier', 'modèle', 'template', 'colonnes', 'requirement', 'wsos section', 'day of marking', 'max mark', 'judgement score', 'xlsx'],
     fr: {
       title: 'Remplir le fichier Excel du barème', short: 'Le fichier Excel',
-      summary: 'La structure du fichier, colonne par colonne, avec l’exemple du bonhomme de neige et les 7 règles qui évitent les erreurs à l’import.',
+      summary: 'La structure du fichier, colonne par colonne, avec l’exemple du bonhomme de neige et les 8 règles qui évitent les erreurs à l’import (dont : 2 points maximum par aspect).',
       objectives: ['Récupérer le bon modèle de fichier', 'Remplir chaque colonne sans erreur', 'Vérifier son fichier avant de l’importer'],
       quick: [
         'Modèle : **Marking Scheme › Marking Scheme › Export** (format **CIS 5.0**)',
@@ -19,7 +19,8 @@
         'Aspect : D = **M** ou **J**, E = description, I = **section WSOS**, K = **Max Mark**',
         'Measurement : H = Requirement en **nombre seul**',
         'Judgement : 4 lignes F = 0, 1, 2, 3 + description en G',
-        'Total des Max Mark = **100**'
+        'Total des Max Mark = **100**',
+        '**2 points maximum par aspect** (Max Mark ≤ 2)'
       ],
       body: `Le barème se prépare dans **Excel**, puis s'importe dans le CIS. Un fichier bien rempli = un import sans surprise.
 
@@ -45,6 +46,9 @@ Le premier onglet, **CIS Marking Scheme Import**, contient tout le barème :
 
 ![Structure du fichier Excel (exemple bonhomme de neige)](assets/img/cis/excel-structure.png)
 
+> [!WARNING] Exemple à corriger
+> Dans ce fichier d'exemple, certains aspects dépassent **2 points** (A1.J1 = 3, A2.M1 = 3…). La règle est **2 points maximum par aspect** : voir les règles d'or plus bas.
+
 | Zone | Lignes | Ce qu'on y met |
 |---|---|---|
 | 1. **WSOS** | haut du fichier | N° de section (A), nom (B), poids en % (I). Les colonnes J et K se calculent seules. |
@@ -66,7 +70,7 @@ Le premier onglet, **CIS Marking Scheme Import**, contient tout le barème :
 | **H** | Requirement | vide | M seulement : valeur attendue (**nombre seul**) |
 | **I** | WSOS Section | vide | **n° de section WSOS** (1, 2, 3…) |
 | **J** | Calculation Row | vide | rempli par le CIS à l'export (ne pas toucher) |
-| **K** | Max Mark | vide | **note maximale** de l'aspect |
+| **K** | Max Mark | vide | **note maximale** de l'aspect : **2 points au maximum** |
 
 ### Un aspect Measurement
 
@@ -82,16 +86,17 @@ Une ligne pour l'aspect (**D = J**), puis **quatre lignes** pour les scores 0 à
 
 | D | E | F | G | I | K |
 |---|---|---|---|---|---|
-| J | Apparence de la jambe droite | | | 1 | 3 |
+| J | Apparence de la jambe droite | | | 1 | 2 |
 | | | 0 | Mauvais | | |
 | | | 1 | Correcte avec quelques défauts | | |
 | | | 2 | Respecte le standard | | |
 | | | 3 | Excellent | | |
 
-## 4. Les 7 règles d'or
+## 4. Les 8 règles d'or
 
 > [!IMPORTANT] Vérifiez ces points avant chaque import
 > 1. Le total des **Max Mark** fait exactement **100**.
+> 1. **Aucun aspect ne dépasse 2 points** (colonne K ≤ 2). Un élément plus important se découpe en plusieurs aspects (ex. : « Hauteur du socle » 1,5 + « Diamètre du socle » 2 + « Stabilité » 2 au lieu d'un seul aspect à 5,5).
 > 2. **Chaque aspect** a un numéro de **section WSOS** en colonne I.
 > 3. **Chaque sous-critère** a un **jour** en colonne C.
 > 4. Le **Requirement** d'un aspect qui sera calculé contient un **nombre seul** : 800, et non « 800 mm » ni « 300mm +- 15mm ».
@@ -102,6 +107,7 @@ Une ligne pour l'aspect (**D = J**), puis **quatre lignes** pour les scores 0 à
 :::guided
 ### Ce que nous avons constaté en important le bonhomme de neige
 
+- Plusieurs aspects dépassaient **2 points** (le socle D1 à 15 points, la veste F1 à 12, l'apparence de la jambe A1.J1 à 3…). Le CIS les a acceptés, mais la règle est de **2 points maximum par aspect** : il faut les découper en plusieurs aspects.
 - Les aspects des critères B à H n'avaient **pas de section WSOS** : l'import a fonctionné, mais le CIS affiche une **variance de 97,5 %** (voir [[wsos]]).
 - Les Requirements du sous-critère A2 étaient écrits « 300mm +- 15mm » : le CIS les **ignore** et aucun calcul ne peut s'appuyer dessus (voir [[calc-ranged-score]]).
 - La cellule A1 contenait « 99 Construction Bonhomme de Neige » alors que le métier est « 155 test_wiki » : le CIS **ne vérifie pas** ce titre, l'import s'est fait quand même. Gardez quand même le bon nom pour vous y retrouver.
@@ -116,7 +122,7 @@ Un fichier exporté depuis le CIS contient un second onglet, **Calculations**, q
     },
     en: {
       title: 'Fill in the marking scheme Excel file', short: 'The Excel file',
-      summary: 'The file structure, column by column, with the snowman example and the 7 rules that prevent import errors.',
+      summary: 'The file structure, column by column, with the snowman example and the 8 rules that prevent import errors (including: 2 marks at most per aspect).',
       objectives: ['Get the right template', 'Fill in each column without errors', 'Check your file before importing'],
       quick: [
         'Template: **Marking Scheme › Marking Scheme › Export** (format **CIS 5.0**)',
@@ -125,7 +131,8 @@ Un fichier exporté depuis le CIS contient un second onglet, **Calculations**, q
         'Aspect: D = **M** or **J**, E = description, I = **WSOS section**, K = **Max Mark**',
         'Measurement: H = Requirement as a **plain number**',
         'Judgement: 4 rows F = 0, 1, 2, 3 + description in G',
-        'Total of Max Marks = **100**'
+        'Total of Max Marks = **100**',
+        '**2 marks at most per aspect** (Max Mark ≤ 2)'
       ],
       body: `The marking scheme is prepared in **Excel**, then imported into the CIS. A well-filled file = an import without surprises.
 
@@ -151,6 +158,9 @@ The first sheet, **CIS Marking Scheme Import**, holds the whole marking scheme:
 
 ![Excel file structure (snowman example)](assets/img/cis/excel-structure.png)
 
+> [!WARNING] Example to fix
+> In this example file, some aspects exceed **2 marks** (A1.J1 = 3, A2.M1 = 3…). The rule is **2 marks at most per aspect**: see the golden rules below.
+
 | Area | Rows | What goes there |
 |---|---|---|
 | 1. **WSOS** | top of the file | Section no. (A), name (B), weight in % (I). Columns J and K are calculated. |
@@ -172,7 +182,7 @@ The first sheet, **CIS Marking Scheme Import**, holds the whole marking scheme:
 | **H** | Requirement | empty | M only: expected value (**plain number**) |
 | **I** | WSOS Section | empty | **WSOS section number** (1, 2, 3…) |
 | **J** | Calculation Row | empty | filled by the CIS on export (do not touch) |
-| **K** | Max Mark | empty | aspect **maximum mark** |
+| **K** | Max Mark | empty | aspect **maximum mark**: **2 marks at most** |
 
 ### A Measurement aspect
 
@@ -188,16 +198,17 @@ One row for the aspect (**D = J**), then **four rows** for scores 0 to 3 with th
 
 | D | E | F | G | I | K |
 |---|---|---|---|---|---|
-| J | Right leg appearance | | | 1 | 3 |
+| J | Right leg appearance | | | 1 | 2 |
 | | | 0 | Poor | | |
 | | | 1 | Acceptable with some flaws | | |
 | | | 2 | Meets the standard | | |
 | | | 3 | Excellent | | |
 
-## 4. The 7 golden rules
+## 4. The 8 golden rules
 
 > [!IMPORTANT] Check these points before every import
 > 1. The **Max Marks** total exactly **100**.
+> 1. **No aspect is above 2 marks** (column K ≤ 2). A bigger item is split into several aspects (e.g. “Base height” 1.5 + “Base diameter” 2 + “Stability” 2 instead of one 5.5-mark aspect).
 > 2. **Every aspect** has a **WSOS section** number in column I.
 > 3. **Every sub-criterion** has a **day** in column C.
 > 4. The **Requirement** of an aspect that will be calculated is a **plain number**: 800, not “800 mm” or “300mm +- 15mm”.
@@ -208,6 +219,7 @@ One row for the aspect (**D = J**), then **four rows** for scores 0 to 3 with th
 :::guided
 ### What we found when importing the snowman
 
+- Several aspects were above **2 marks** (base D1 at 15 marks, jacket F1 at 12, leg appearance A1.J1 at 3…). The CIS accepted them, but the rule is **2 marks at most per aspect**: they must be split into several aspects.
 - Aspects in criteria B to H had **no WSOS section**: the import worked, but the CIS shows a **97.5% variance** (see [[wsos]]).
 - Requirements in sub-criterion A2 were written “300mm +- 15mm”: the CIS **ignores** them and no calculation can use them (see [[calc-ranged-score]]).
 - Cell A1 said “99 Construction Bonhomme de Neige” while the skill is “155 test_wiki”: the CIS **does not check** this title, the import still worked. Keep the right name anyway, to find your way around.
@@ -270,7 +282,7 @@ A file exported from the CIS has a second sheet, **Calculations**, describing th
 
 ## Vérifier le résultat
 
-Après l'import, le haut de la page affiche les critères et leur note. Le **Criterion Total** doit être **100.00**.
+Après l'import, le haut de la page affiche les critères et leur note. Le **Criterion Total** doit être **100.00**, et en dépliant les sous-critères, **aucun aspect ne doit dépasser 2 points** dans la colonne *Max Mark*.
 
 ![Barème importé : critères A à H](assets/img/cis/ms-criteria.png)
 
@@ -349,7 +361,7 @@ En bas de la page, *Export Marking Scheme* : gardez le format **CIS 5.0** (le se
 
 ## Check the result
 
-After the import, the top of the page lists the criteria and their marks. The **Criterion Total** must be **100.00**.
+After the import, the top of the page lists the criteria and their marks. The **Criterion Total** must be **100.00**, and when expanding sub-criteria, **no aspect may exceed 2 marks** in the *Max Mark* column.
 
 ![Imported marking scheme: criteria A to H](assets/img/cis/ms-criteria.png)
 
@@ -528,7 +540,7 @@ Why? Only **40.5 marks** out of 100 are linked to a section: aspects in criteria
 ## Avant de verrouiller : la check-list
 
 :::steps
-1. Le barème totalise **100 points** (*Criterion Total* = 100.00).
+1. Le barème totalise **100 points** (*Criterion Total* = 100.00) et **aucun aspect ne dépasse 2 points**.
 2. La **variance WSOS** est proche de 0 % ([[wsos]]).
 3. Les **calculs** sont posés et testés ([[marking-types]]).
 4. Chaque sous-critère a un **jour** et une **équipe** ([[marking-days]], [[marking-team]]).
@@ -581,7 +593,7 @@ Sur la page d'accueil, la ligne **Marking Scheme Locked** passe à **Yes** (vert
 ## Before locking: the checklist
 
 :::steps
-1. The marking scheme totals **100 marks** (*Criterion Total* = 100.00).
+1. The marking scheme totals **100 marks** (*Criterion Total* = 100.00) and **no aspect exceeds 2 marks**.
 2. The **WSOS variance** is close to 0% ([[wsos]]).
 3. **Calculations** are set and tested ([[marking-types]]).
 4. Every sub-criterion has a **day** and a **team** ([[marking-days]], [[marking-team]]).

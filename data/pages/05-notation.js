@@ -168,15 +168,15 @@ Ces descriptions sont écrites dans l'Excel (colonnes F et G) et imprimées sur 
 
 ## Comment le CIS calcule la note
 
-Note = **(somme des scores ÷ nombre de jurés) ÷ 3 × Max Mark** (règle WorldSkills ; à vérifier sur votre première saisie, la base de formation n'ayant pas de compétiteurs)
+Note = **(somme des scores ÷ nombre de jurés) ÷ 3 × Max Mark**, avec une Max Mark de **2 points au maximum** (règle WorldSkills ; à vérifier sur votre première saisie, la base de formation n'ayant pas de compétiteurs)
 
-| Scores des 3 jurés | Moyenne | Max Mark 3 | Max Mark 1 |
+| Scores des 3 jurés | Moyenne | Max Mark 2 | Max Mark 1 |
 |---|---:|---:|---:|
-| 3 – 3 – 3 | 3 | 3,00 | 1,00 |
-| 2 – 3 – 3 | 2,67 | 2,67 | 0,89 |
-| 2 – 2 – 3 | 2,33 | 2,33 | 0,78 |
-| 2 – 2 – 2 | 2 | 2,00 | 0,67 |
-| 1 – 2 – 2 | 1,67 | 1,67 | 0,56 |
+| 3 – 3 – 3 | 3 | 2,00 | 1,00 |
+| 2 – 3 – 3 | 2,67 | 1,78 | 0,89 |
+| 2 – 2 – 3 | 2,33 | 1,56 | 0,78 |
+| 2 – 2 – 2 | 2 | 1,33 | 0,67 |
+| 1 – 2 – 2 | 1,67 | 1,11 | 0,56 |
 | 1 – 3 – 3 | — | **invalide** (écart 2) | |
 
 ## Trouver les écarts trop grands
@@ -223,15 +223,15 @@ These descriptions are written in Excel (columns F and G) and printed on the mar
 
 ## How the CIS calculates the mark
 
-Mark = **(sum of scores ÷ number of jurors) ÷ 3 × Max Mark** (WorldSkills rule; check it on your first entry, as the training database had no competitors)
+Mark = **(sum of scores ÷ number of jurors) ÷ 3 × Max Mark**, with a Max Mark of **2 at most** (WorldSkills rule; check it on your first entry, as the training database had no competitors)
 
-| 3 jurors' scores | Average | Max Mark 3 | Max Mark 1 |
+| 3 jurors' scores | Average | Max Mark 2 | Max Mark 1 |
 |---|---:|---:|---:|
-| 3 – 3 – 3 | 3 | 3.00 | 1.00 |
-| 2 – 3 – 3 | 2.67 | 2.67 | 0.89 |
-| 2 – 2 – 3 | 2.33 | 2.33 | 0.78 |
-| 2 – 2 – 2 | 2 | 2.00 | 0.67 |
-| 1 – 2 – 2 | 1.67 | 1.67 | 0.56 |
+| 3 – 3 – 3 | 3 | 2.00 | 1.00 |
+| 2 – 3 – 3 | 2.67 | 1.78 | 0.89 |
+| 2 – 2 – 3 | 2.33 | 1.56 | 0.78 |
+| 2 – 2 – 2 | 2 | 1.33 | 0.67 |
+| 1 – 2 – 2 | 1.67 | 1.11 | 0.56 |
 | 1 – 3 – 3 | — | **invalid** (gap 2) | |
 
 ## Find gaps that are too large

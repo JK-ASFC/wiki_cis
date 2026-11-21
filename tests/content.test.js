@@ -27,7 +27,7 @@ S.pages.forEach(p => {
       if (!fs.existsSync(path.join(root, f))) errors.push(`${p.id} (${l}) : fichier absent ${f}`);
     });
     (txt.match(/::calc\[[a-z]+\](\{.*\})?/g) || []).forEach(m => {
-      const j = m.match(/\{.*\}/); if (j) { try { JSON.parse(j[0]); } catch (e) { errors.push(`${p.id} (${l}) : JSON ::calc invalide`); } }
+      const j = m.match(/\{.*\}/); if (j) { try { const c = JSON.parse(j[0]); if (c.max > 2) errors.push(`${p.id} (${l}) : exemple ::calc à ${c.max} points (2 maximum par aspect)`); } catch (e) { errors.push(`${p.id} (${l}) : JSON ::calc invalide`); } }
     });
   });
 });

@@ -15,7 +15,7 @@
         'Adresse : **cis.worldskills-france.org** › choisir sa compétition',
         'Barème = Critères (A, B…) › Sous-critères (A1…) › Aspects (A1.M1, A1.J1…)',
         'M = Measurement (objectif, calcul possible) · J = Judgement (0 à 3 par juré)',
-        'Total du barème = **100 points**',
+        'Total du barème = **100 points** · **2 points maximum par aspect**',
         'Ordre : Excel › Import › Calculs › Planning › Verrouillage › Formulaires › Saisie › Résultats'
       ],
       body: `Le **CIS** (*Competition Information System*) est le logiciel de WorldSkills International utilisé par WorldSkills France pour **toute la notation** d'une compétition. Il sert à préparer le barème, organiser les jurés, imprimer les feuilles de notation, saisir les notes et produire les résultats.
@@ -31,7 +31,7 @@ Le barème (*Marking Scheme*) est noté sur **100 points**. Il se découpe toujo
 |---|---|---|
 | **Critère** | A – Mesure et précision des éléments principaux | Une grande partie de l'épreuve (A, B, C…) |
 | **Sous-critère** | A1 – Mesure et précision des jambes | Un groupe d'aspects notés **le même jour, par la même équipe** |
-| **Aspect** | A1.M1 – Longueur de la jambe droite | La ligne qui reçoit une note |
+| **Aspect** | A1.M1 – Longueur de la jambe droite | La ligne qui reçoit une note : **2 points maximum** |
 
 ![Le barème importé dans le CIS : critères A à H, chacun avec sa note](assets/img/cis/ms-criteria.png)
 
@@ -72,7 +72,7 @@ Une **base de formation** est disponible : *Base de Training / Formation CIS (v6
         'Address: **cis.worldskills-france.org** › choose your competition',
         'Marking scheme = Criteria (A, B…) › Sub-criteria (A1…) › Aspects (A1.M1, A1.J1…)',
         'M = Measurement (objective, can be calculated) · J = Judgement (0 to 3 per juror)',
-        'Marking scheme total = **100 marks**',
+        'Marking scheme total = **100 marks** · **2 marks at most per aspect**',
         'Order: Excel › Import › Calculations › Schedule › Lock › Forms › Mark entry › Results'
       ],
       body: `The **CIS** (*Competition Information System*) is the WorldSkills International software used by WorldSkills France for **all marking** in a competition: preparing the marking scheme, organising jurors, printing marking forms, entering marks and producing results.
@@ -88,7 +88,7 @@ The *Marking Scheme* totals **100 marks** and is always split into three levels:
 |---|---|---|
 | **Criterion** | A – Measurement and accuracy of the main parts | A major part of the test project (A, B, C…) |
 | **Sub-criterion** | A1 – Legs measurement and accuracy | A group of aspects marked **on the same day, by the same team** |
-| **Aspect** | A1.M1 – Right leg length | The line that receives a mark |
+| **Aspect** | A1.M1 – Right leg length | The line that receives a mark: **2 marks at most** |
 
 ![The marking scheme imported into the CIS: criteria A to H, each with its mark](assets/img/cis/ms-criteria.png)
 

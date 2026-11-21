@@ -37,7 +37,7 @@ plutôt qu'inventer ; utiliser les noms de menus anglais exacts du CIS (`Marking
    critères › sous-critères (jour) › aspects (M/J, description, requirement, section WSOS, note max, scores J, calcul).
 2. **Contrôles automatiques** (code, pas IA) — les 7 règles d'or du wiki :
    total = 100 ; section WSOS sur chaque aspect ; jour sur chaque sous-critère ; Requirement **numérique** si utilisé
-   comme cible ; 4 scores J ; identifiants A1, A2… ; variance WSOS calculée.
+   comme cible ; **2 points maximum par aspect** ; 4 scores J ; identifiants A1, A2… ; variance WSOS calculée.
 3. **Proposition de calculs** : pour chaque aspect M, le modèle propose une méthode et ses paramètres
    (s'appuie sur `data/trades.js`), testée avec `calc.js` sur des valeurs types.
 4. **Écran de vérification** pour l'Expert : tableau critère par critère, alertes en rouge, variance WSOS,

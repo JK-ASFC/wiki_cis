@@ -136,7 +136,11 @@
       summary: 'Les réponses courtes aux questions les plus posées par les Experts et les jurés.',
       objectives: ['Trouver une réponse rapide'],
       quick: ['Cliquez sur une question pour voir la réponse'],
-      body: `:::details Je peux tester sans risque ?
+      body: `:::details Combien de points au maximum pour un aspect ?
+**2 points maximum par aspect**, Measurement comme Judgement. Pour noter un élément plus important, découpez-le en plusieurs aspects. Le CIS accepte une valeur plus grande à l'import : c'est à vous de vérifier la colonne K de l'Excel.
+:::
+
+:::details Je peux tester sans risque ?
 Oui : la **base de formation** (*Base de Training / Formation CIS*, logo rouge « TEST ») sert à cela. Demandez un compte à [cis@cofom.org](mailto:cis@cofom.org).
 :::
 
@@ -185,7 +189,11 @@ Oui (menu à votre nom › **Preferences**), mais la traduction est partielle. C
       summary: 'Short answers to the questions Experts and jurors ask most.',
       objectives: ['Find a quick answer'],
       quick: ['Click a question to see the answer'],
-      body: `:::details Can I test safely?
+      body: `:::details What is the maximum mark for one aspect?
+**2 marks at most per aspect**, for Measurement and Judgement alike. To mark a bigger item, split it into several aspects. The CIS accepts a higher value at import: it is up to you to check column K in Excel.
+:::
+
+:::details Can I test safely?
 Yes: the **training database** (*Base de Training / Formation CIS*, red “TEST” logo) is made for that. Ask for an account at [cis@cofom.org](mailto:cis@cofom.org).
 :::
 

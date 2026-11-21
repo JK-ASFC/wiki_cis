@@ -123,6 +123,7 @@
       best: 'Note max à…', highest: 'la plus grande valeur', lowest: 'la plus petite valeur', min: 'Minimum Value (optionnel)', maxv: 'Maximum Value (optionnel)',
       basis: 'Résultats basés sur', valueDiff: 'l’écart en valeur', pctDiff: 'l’écart en %', interval: 'Intervalle', dedPer: 'Points déduits par intervalle', prop: 'Déductions proportionnelles',
       pass: 'Réussi (Pass)', fail: 'Échoué (Fail)', none: '—', noMark: 'pas de note',
+      maxNote: 'Attention : un aspect vaut 2 points maximum. Découpez cet élément en plusieurs aspects.',
       cmpNote: 'Méthode comparative : la note de chacun dépend des autres. Si une seule valeur manque ou n’est pas un nombre, le CIS n’affiche aucune note.',
       why: 'Détail du calcul'
     },
@@ -135,15 +136,16 @@
       best: 'Highest Mark to…', highest: 'Highest Value', lowest: 'Lowest Value', min: 'Minimum Value (optional)', maxv: 'Maximum Value (optional)',
       basis: 'Results Based On', valueDiff: 'Value Difference', pctDiff: 'Percentage Difference', interval: 'Value or Percentage Interval', dedPer: 'Marks Deducted per Difference', prop: 'Deductions are Proportional',
       pass: 'Pass', fail: 'Fail', none: '—', noMark: 'no mark',
+      maxNote: 'Warning: an aspect is worth 2 marks at most. Split this item into several aspects.',
       cmpNote: 'Comparative method: each mark depends on the others. If a single value is missing or not a number, the CIS shows no marks at all.',
       why: 'Calculation details'
     }
   };
 
   var DEFAULTS = {
-    passfail: { max: 8, values: ['pass', 'fail', 'pass'] },
-    choice: { max: 6.5, dtype: 'percent', choices: [['Conforme', 0], ['Défaut mineur', 25], ['Défaut majeur', 50], ['Absente', 100]], values: ['Conforme', 'Défaut mineur', 'Absente'] },
-    completed: { max: 12, possible: 6, values: [6, 5, 3, 0] },
+    passfail: { max: 2, values: ['pass', 'fail', 'pass'] },
+    choice: { max: 2, dtype: 'percent', choices: [['Conforme', 0], ['Défaut mineur', 25], ['Défaut majeur', 50], ['Absente', 100]], values: ['Conforme', 'Défaut mineur', 'Absente'] },
+    completed: { max: 2, possible: 6, values: [6, 5, 4, 3, 0] },
     ranged: { max: 1.5, target: 800, dtype: 'marks', ranges: [[5, 5, 0], [10, 10, 0.5], [15, 15, 1]], values: [800, 804, 808, 813, 790] },
     regular: { max: 0.5, target: 100, diffType: 'unit', difference: 5, dtype: 'marks', deduction: 0.25, values: [100, 104, 105, 111] },
     percent: { max: 2, best: 'lowest', min: '', max_value: '', values: [30, 50, 60, 90] },
@@ -244,6 +246,7 @@
             (m === null ? esc(t.noMark) : fmt(m, lang)) + '</span><span class="sim-bar"><i style="width:' + pct + '%"></i></span></td></tr>';
         }).join('') + '</tbody></table>' +
         (state.values.length < 8 ? '<button type="button" class="link-btn" data-sim="add">+ ' + esc(t.add) + '</button>' : '') +
+        '<p class="sim-note sim-note--max"' + (num(state.max) > 2 ? '' : ' hidden') + '>' + esc(t.maxNote) + '</p>' +
         (comparative ? '<p class="sim-note">' + esc(t.cmpNote) + '</p>' : '') + '</div></div>';
       if (focusKey) {
         var f = el.querySelector('[data-k="' + focusKey + '"],[data-v="' + focusKey.replace('v:', '') + '"]');
@@ -265,6 +268,7 @@
     }
     function updateMarks() {
       var marks = compute(type, state, state.values);
+      var mx = el.querySelector('.sim-note--max'); if (mx) mx.hidden = !(num(state.max) > 2);
       var rows = el.querySelectorAll('.sim-values tbody tr');
       rows.forEach(function (tr, i) {
         var m = marks[i], span = tr.querySelector('.sim-mark'), bar = tr.querySelector('.sim-bar i');
