@@ -266,7 +266,7 @@ Mark = **(sum of scores ÷ number of jurors) ÷ 3 × Max Mark** (WorldSkills rul
 :::steps
 1. **Reports** › **Missing Marks** : le tableau liste, par compétiteur et par jour, les notes encore attendues. Il doit être vide pour le jour.
 2. **Assessment** › **Invalid Judgement Scores** : aucun écart de plus d'un point ([[judgement]]).
-3. Imprimez **Marking forms with completed marks** et faites relire / signer ([[marking-forms]], [[so-closing]]).
+3. Imprimez **Marking forms with completed marks** et faites relire / signer ([[marking-forms]]).
 4. **Assessment** › **Lock Marks** : verrouillez les notes du jour.
 5. Sur le tableau de bord, **Day X Marks Locked** passe à **Yes**.
 :::
@@ -303,7 +303,7 @@ Une note verrouillée ne se modifie plus librement. Il faut :
 :::steps
 1. **Reports** › **Missing Marks**: the table lists, per competitor and day, marks still expected. It must be empty for the day.
 2. **Assessment** › **Invalid Judgement Scores**: no gap above one point ([[judgement]]).
-3. Print **Marking forms with completed marks** and have them checked / signed ([[marking-forms]], [[so-closing]]).
+3. Print **Marking forms with completed marks** and have them checked / signed ([[marking-forms]]).
 4. **Assessment** › **Lock Marks**: lock the day's marks.
 5. On the dashboard, **Day X Marks Locked** turns **Yes**.
 :::
@@ -420,7 +420,7 @@ A locked mark can no longer be changed freely. You need to:
 1. Vérifiez que **tous les jours** sont verrouillés (tableau de bord : *Day X Marks Locked = Yes*).
 2. **Assessment** › **Marking Forms** › **Marking forms with completed marks** › **Create PDF** : les feuilles de chaque sous-critère avec les notes saisies.
 3. **Mark Summary form** : le récapitulatif d'un compétiteur, critère par critère et jour par jour, avec le total.
-4. Faites signer les documents prévus ([[so-closing]]).
+4. Faites signer les documents prévus par l'organisation.
 :::
 
 ![Mark Summary form : récapitulatif par critère et par jour](assets/img/cis/pdf-summary.png)
@@ -442,7 +442,7 @@ A locked mark can no longer be changed freely. You need to:
 1. Check that **every day** is locked (dashboard: *Day X Marks Locked = Yes*).
 2. **Assessment** › **Marking Forms** › **Marking forms with completed marks** › **Create PDF**: each sub-criterion's forms with the entered marks.
 3. **Mark Summary form**: a competitor's summary, criterion by criterion and day by day, with the total.
-4. Have the planned documents signed ([[so-closing]]).
+4. Have the documents required by the organisers signed.
 :::
 
 ![Mark Summary form: summary per criterion and per day](assets/img/cis/pdf-summary.png)

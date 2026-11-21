@@ -18,7 +18,7 @@
     if (qMode === 'guided' || qMode === 'expert') S.setPref('mode', qMode);
     var nav = (navigator.language || 'fr').slice(0, 2).toLowerCase();
     lang = S.pref('lang', nav === 'en' ? 'en' : 'fr');
-    mode = S.pref('mode', 'guided');
+    mode = 'guided'; // un seul mode d'affichage : tout est expliqué pour les débutants
     theme = S.pref('theme', 'system');
   }
   function t(k, v) { return I.t(lang, k, v); }
@@ -178,30 +178,27 @@
   function segBtn(kind, val, label, on, tip) {
     return '<button type="button" data-' + kind + '="' + val + '" aria-pressed="' + on + '" title="' + esc(tip) + '">' + label + '</button>';
   }
+  function logo(cls) {
+    return '<img class="' + cls + '" src="assets/img/logo-worldskills-france.png" alt="WorldSkills France" width="160" height="150">';
+  }
   function header() {
     var catId = page === 'category' ? params.get('id') : (page === 'article' && S.page(params.get('id')) ? S.page(params.get('id')).category : '');
     function nav(href, label, on) { return '<a href="' + href + '"' + (on ? ' aria-current="page" class="active"' : '') + '>' + esc(label) + '</a>'; }
-    var themeIcon = theme === 'dark' ? 'moon' : theme === 'light' ? 'sun' : 'monitor';
-    return '<header class="site-header"><div class="header-inner">' +
+    return '<div class="tricolor" aria-hidden="true"><i></i><i></i><i></i></div>' +
+      '<header class="site-header"><div class="header-inner">' +
       '<button class="icon-btn menu-btn" type="button" data-action="open-sidebar" aria-label="' + esc(t('nav.menu')) + '" aria-controls="sidebar" aria-expanded="false">' + icon('menu') + '</button>' +
-      '<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">CIS</span><span class="brand-text"><strong>CIS Wiki</strong><small>' + esc(t('brand.sub')) + '</small></span></a>' +
+      '<a class="brand" href="index.html">' + logo('brand-logo') + '<span class="brand-sep" aria-hidden="true"></span><span class="brand-text"><strong>' + esc(t('brand.name')) + '</strong><small>' + esc(t('brand.tagline')) + '</small></span></a>' +
       '<nav class="header-nav" aria-label="' + esc(t('nav.main')) + '">' +
+        nav('guide.html', t('nav.guide'), page === 'guide') +
         nav(categoryUrl('start'), t('nav.guides'), ['start', 'bareme', 'calculs', 'organisation', 'notation', 'aide'].indexOf(catId) !== -1) +
-        nav(categoryUrl('signoff'), t('nav.signoff'), catId === 'signoff') +
         nav(categoryUrl('videos'), t('nav.videos'), catId === 'videos') +
         nav('glossary.html', t('nav.glossary'), page === 'glossary') +
       '</nav>' +
       '<button class="search-trigger" type="button" data-action="open-palette">' + icon('search') + '<span>' + esc(t('search.placeholder')) + '</span><kbd>Ctrl K</kbd></button>' +
       '<div class="header-tools">' +
-        '<div class="seg seg--mode" role="group" aria-label="' + esc(t('mode.label')) + '">' +
-          segBtn('mode', 'guided', icon('compass') + '<span>' + esc(t('mode.guided')) + '</span>', mode === 'guided', t('mode.guidedHint')) +
-          segBtn('mode', 'expert', icon('zap') + '<span>' + esc(t('mode.expert')) + '</span>', mode === 'expert', t('mode.expertHint')) +
-        '</div>' +
         '<div class="seg seg--lang" role="group" aria-label="' + esc(t('lang.label')) + '">' +
           segBtn('lang', 'fr', 'FR', lang === 'fr', 'Français') + segBtn('lang', 'en', 'EN', lang === 'en', 'English') +
         '</div>' +
-        '<button class="icon-btn" type="button" data-action="theme" aria-label="' + esc(t('theme.label') + ' : ' + t('theme.' + theme)) + '" title="' + esc(t('theme.label') + ' : ' + t('theme.' + theme)) + '">' + icon(themeIcon) + '</button>' +
-        '<a class="icon-btn" href="admin.html" aria-label="' + esc(t('nav.admin')) + '" title="' + esc(t('nav.admin')) + '">' + icon('shield') + '</a>' +
       '</div></div></header>';
   }
 
@@ -210,7 +207,8 @@
     var currentCat = page === 'category' ? params.get('id') : (current && current.category);
     var html = '<div class="sidebar-head"><strong>' + esc(t('nav.docs')) + '</strong><button class="icon-btn" type="button" data-action="close-sidebar" aria-label="' + esc(t('common.close')) + '">' + icon('x') + '</button></div>' +
       '<nav class="side-nav" aria-label="' + esc(t('nav.docs')) + '">' +
-      '<a class="side-link side-link--home" href="index.html">' + icon('book') + '<span>' + esc(t('nav.home')) + '</span></a>';
+      '<a class="side-link side-link--home" href="index.html">' + icon('book') + '<span>' + esc(t('nav.home')) + '</span></a>' +
+      '<a class="side-link' + (page === 'guide' ? ' active" aria-current="page"' : '"') + ' href="guide.html">' + icon('compass') + '<span>' + esc(t('nav.guide')) + '</span></a>';
     S.categories().forEach(function (cat) {
       var pages = S.pagesIn(cat.id);
       if (!pages.length) return;
@@ -226,9 +224,7 @@
       html += '</ul></details>';
     });
     html += '<a class="side-link' + (page === 'glossary' ? ' active" aria-current="page"' : '"') + ' href="glossary.html">' + icon('glossary') + '<span>' + esc(t('nav.glossary')) + '</span></a></nav>' +
-      '<div class="side-mobile-tools"><button type="button" class="btn btn--ghost btn--sm" data-action="theme">' + icon('sun') + esc(t('theme.label')) + '</button>' +
-      '<a class="btn btn--ghost btn--sm" href="admin.html">' + icon('shield') + esc(t('nav.admin')) + '</a></div>' +
-      '<div class="side-card" id="side-card">' + sideCard() + '</div>';
+      '';
     return html;
   }
   function sideCard() {
@@ -241,18 +237,17 @@
   function footer() {
     var st = S.settings();
     return '<footer class="site-footer"><div class="container footer-inner">' +
-      '<div class="footer-brand"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">CIS</span><span class="brand-text"><strong>CIS Wiki</strong><small>' + esc(t('brand.sub')) + '</small></span></a><p>' + esc(t('footer.about')) + '</p></div>' +
-      '<div><h2>' + esc(t('footer.links')) + '</h2><ul>' +
-        '<li><a href="' + esc(st.cisUrl) + '" target="_blank" rel="noopener">' + esc(t('footer.cis')) + '</a></li>' +
-        '<li><a href="' + esc(st.signoffUrl) + '" target="_blank" rel="noopener">' + esc(t('footer.signoffTool')) + '</a></li>' +
-        '<li><a href="mailto:' + esc(st.contact) + '">' + esc(t('footer.contact')) + ' · ' + esc(st.contact) + '</a></li></ul></div>' +
-      '<div><h2>' + esc(t('footer.wiki')) + '</h2><ul>' +
-        '<li><a href="glossary.html">' + esc(t('nav.glossary')) + '</a></li>' +
-        '<li><a href="apercu.html">' + esc(t('footer.overview')) + '</a></li>' +
-        '<li><a href="admin.html">' + esc(t('nav.admin')) + '</a></li>' +
-        '<li><a href="' + esc(st.legacyBase) + '" target="_blank" rel="noopener">' + esc(t('footer.legacyWiki')) + '</a></li></ul></div>' +
-      '</div><div class="container footer-note">' + icon('info') + '<span>' + esc(t('footer.prototype')) + '</span></div></footer>';
+      '<div class="footer-brand"><a href="index.html" class="footer-logo-link">' + logo('footer-logo') + '</a><p>' + esc(t('footer.about')) + '</p></div>' +
+      '<nav class="footer-links" aria-label="' + esc(t('footer.links')) + '">' +
+        '<a class="pill" href="guide.html">' + esc(t('nav.guide')) + '</a>' +
+        '<a class="pill" href="' + categoryUrl('start') + '">' + esc(t('nav.guides')) + '</a>' +
+        '<a class="pill" href="glossary.html">' + esc(t('nav.glossary')) + '</a>' +
+        '<a class="pill" href="' + esc(st.cisUrl) + '" target="_blank" rel="noopener">' + esc(t('footer.cis')) + '</a>' +
+        '<a class="pill" href="mailto:' + esc(st.contact) + '">' + esc(t('footer.contact')) + '</a>' +
+      '</nav></div>' +
+      '<div class="container footer-note"><span>© WorldSkills France · ' + esc(t('footer.note')) + '</span><a href="mailto:' + esc(st.contact) + '">' + esc(st.contact) + '</a></div></footer>';
   }
+
 
   function paletteHTML() {
     return '<div class="palette-wrap" id="palette" hidden><div class="palette" role="dialog" aria-modal="true" aria-label="' + esc(t('search.title')) + '">' +
@@ -279,68 +274,45 @@
 
   // ---- Accueil --------------------------------------------------------------
   function renderHome(main) {
-    document.title = 'CIS Wiki · WorldSkills France';
-    var st = S.settings();
-    var popular = (st.popular || []).map(S.page).filter(visible);
+    document.title = t('brand.name') + ' · WorldSkills France';
     var wf = steps();
-    var start = S.page('decouvrir-le-cis');
-
-    var hero = '<section class="hero"><div class="container hero-inner">' +
-      '<p class="eyebrow">' + icon('book') + esc(t('home.eyebrow')) + '</p>' +
-      '<h1>' + esc(t('home.title')) + '</h1><p class="lead">' + esc(t('home.lead')) + '</p>' +
-      '<form class="hero-search" action="search.html" role="search"><label class="sr-only" for="hero-q">' + esc(t('search.title')) + '</label>' + icon('search') +
-        '<input id="hero-q" name="q" type="search" placeholder="' + esc(t('search.hero')) + '" autocomplete="off"><kbd>Ctrl K</kbd><button class="btn btn--primary" type="submit">' + esc(t('search.button')) + '</button></form>' +
-      '<div class="chips"><span>' + esc(t('home.popular')) + '</span>' + popular.map(function (p) { return '<a class="chip" href="' + articleUrl(p.id) + '">' + esc(shortTitle(p)) + '</a>'; }).join('') + '</div>' +
+    var hero = '<section class="welcome"><div class="container welcome-inner">' +
+      '<p class="welcome-kicker">' + esc(t('home.kicker')) + '</p>' +
+      '<h1>' + esc(t('home.welcome')) + '</h1>' +
+      '<p class="welcome-lead">' + esc(t('home.welcomeLead')) + '</p>' +
+      '<div class="welcome-actions"><a class="btn btn--gold btn--lg" href="guide.html">' + icon('compass') + esc(t('home.startGuide')) + '</a>' +
+        '<a class="btn btn--outline-light btn--lg" href="' + articleUrl('decouvrir-le-cis') + '">' + esc(t('home.readDocs')) + '</a></div>' +
+      '<form class="welcome-search" action="search.html" role="search"><label class="sr-only" for="hero-q">' + esc(t('search.title')) + '</label>' + icon('search') +
+        '<input id="hero-q" name="q" type="search" placeholder="' + esc(t('search.hero')) + '" autocomplete="off"><button class="btn btn--primary" type="submit">' + esc(t('search.button')) + '</button></form>' +
       '</div></section>';
 
-    var paths = '<section class="container paths" aria-label="' + esc(t('mode.label')) + '">' +
-      '<a class="path-card path-card--guided" href="' + (visible(start) ? articleUrl(start.id) : '#workflow') + '" data-set-mode="guided">' +
-        '<span class="path-icon">' + icon('compass') + '</span><span class="path-tag">' + esc(t('mode.guided')) + '</span><h2>' + esc(t('home.pathGuidedTitle')) + '</h2><p>' + esc(t('home.pathGuidedText')) + '</p><span class="cta">' + esc(t('home.pathGuidedCta')) + icon('arrowRight') + '</span></a>' +
-      '<a class="path-card path-card--expert" href="#quick" data-set-mode="expert">' +
-        '<span class="path-icon">' + icon('zap') + '</span><span class="path-tag">' + esc(t('mode.expert')) + '</span><h2>' + esc(t('home.pathExpertTitle')) + '</h2><p>' + esc(t('home.pathExpertText')) + '</p><span class="cta">' + esc(t('home.pathExpertCta')) + icon('arrowRight') + '</span></a>' +
-      '</section>';
+    var explain = '<section class="container section intro3">' +
+      ['what', 'who', 'how'].map(function (k, i) {
+        return '<div class="intro3-item"><span class="intro3-num">' + (i + 1) + '</span><h2>' + esc(t('home.' + k + 'Title')) + '</h2><p>' + MD.inline(t('home.' + k + 'Text'), mdOpts()) + '</p></div>';
+      }).join('') + '</section>';
 
-    var workflow = '<section class="container section" id="workflow"><div class="section-head"><div><h2>' + icon('map') + esc(t('home.workflowTitle')) + '</h2><p>' + esc(t('home.workflowLead')) + '</p></div><a class="link-more" href="' + articleUrl('decouvrir-le-cis') + '">' + esc(t('home.seeAll')) + icon('arrowRight') + '</a></div>' +
-      '<ol class="stepper">' + wf.map(function (x) {
-        return '<li class="step step--' + x.phase + '"><a href="' + articleUrl(x.p.id) + '"><span class="step-top"><span class="step-num">' + x.step + '</span><span class="step-phase">' + esc(t('phase.' + x.phase)) + '</span></span>' +
-          '<span class="step-icon">' + icon(x.icon) + '</span><strong>' + esc(shortTitle(x.p)) + '</strong><small>' + esc(C(x.p).c.summary) + '</small></a></li>';
+    var guideBand = '<section class="container section"><a class="guide-band" href="guide.html"><span class="guide-band-icon">' + icon('compass') + '</span>' +
+      '<span class="guide-band-text"><strong>' + esc(t('home.guideTitle')) + '</strong><span>' + esc(t('home.guideText')) + '</span></span><span class="btn btn--primary">' + esc(t('home.startGuide')) + icon('arrowRight') + '</span></a></section>';
+
+    var workflow = '<section class="container section" id="workflow"><h2 class="section-title">' + esc(t('home.workflowTitle')) + '</h2><p class="section-lead">' + esc(t('home.workflowLead')) + '</p>' +
+      '<ol class="path-list">' + wf.map(function (x) {
+        return '<li><a href="' + articleUrl(x.p.id) + '"><span class="path-num">' + x.step + '</span><span class="path-text"><strong>' + esc(shortTitle(x.p)) + '</strong><small>' + esc(C(x.p).c.summary) + '</small></span>' + icon('chevronRight') + '</a></li>';
       }).join('') + '</ol></section>';
 
-    var quickPages = wf.map(function (x) { return x.p; }).filter(function (p) { return (C(p).c.quick || []).length; });
-    var quick = '<section class="container section" id="quick"><div class="section-head"><div><h2>' + icon('zap') + esc(t('home.quickTitle')) + '</h2><p>' + esc(t('home.quickLead')) + '</p></div></div><div class="cheat-grid">' +
-      quickPages.map(function (p) {
-        var c = C(p).c;
-        return '<article class="cheat-card"><header><h3><a href="' + articleUrl(p.id) + '">' + (p.step ? '<span class="step-dot">' + p.step + '</span>' : '') + esc(shortTitle(p)) + '</a></h3>' + levelBadge(p.level) + '</header>' +
-          (p.menuPath ? '<p class="menupath menupath--sm">' + menuPath(p.menuPath) + '</p>' : '') +
-          '<ul>' + c.quick.slice(0, 3).map(function (q) { return '<li>' + MD.inline(q, mdOpts()) + '</li>'; }).join('') + '</ul>' +
-          '<a class="link-more" href="' + articleUrl(p.id) + '">' + esc(t('home.readGuide')) + icon('arrowRight') + '</a></article>';
+    var cats = '<section class="container section"><h2 class="section-title">' + esc(t('home.categoriesTitle')) + '</h2><div class="cat-list">' +
+      S.categories().filter(function (cat) { return S.pagesIn(cat.id).length; }).map(function (cat) {
+        return '<a class="cat-item" href="' + categoryUrl(cat.id) + '"><span class="cat-item-icon">' + icon(cat.icon) + '</span><span><strong>' + esc(L(cat, 'title')) + '</strong><small>' + esc(L(cat, 'desc')) + '</small></span></a>';
       }).join('') + '</div></section>';
 
-    var signoff = '<section class="container section"><div class="section-head"><div><h2>' + icon('signature') + esc(t('home.signoffTitle')) + '</h2><p>' + esc(t('home.signoffLead')) + '</p></div><a class="link-more" href="' + articleUrl('signoff') + '">' + esc(t('home.seeAll')) + icon('arrowRight') + '</a></div>' +
-      '<ol class="timeline">' + (st.signoffTimeline || []).map(function (d) {
-        return '<li><span class="tl-day">' + esc(d.day) + '</span><ul>' + d.items.map(function (it) {
-          return '<li><a href="' + articleUrl(it.page) + '">' + esc(it[lang] || it.fr) + icon('chevronRight') + '</a></li>';
-        }).join('') + '</ul></li>';
-      }).join('') + '</ol></section>';
+    var help = '<section class="container section"><div class="help-box">' + icon('info') + '<p>' + MD.inline(t('home.help'), mdOpts()) + '</p></div></section>';
 
-    var cats = '<section class="container section"><div class="section-head"><div><h2>' + icon('layers') + esc(t('home.categoriesTitle')) + '</h2></div></div><div class="cat-grid">' +
-      S.categories().map(function (cat) {
-        var n = S.pagesIn(cat.id).length;
-        return '<a class="cat-card cat--' + esc(cat.color) + '" href="' + categoryUrl(cat.id) + '"><span class="cat-icon">' + icon(cat.icon) + '</span><strong>' + esc(L(cat, 'title')) + '</strong><p>' + esc(L(cat, 'desc')) + '</p><span class="cat-count">' + esc(t('cat.pages', { n: n })) + '</span></a>';
-      }).join('') + '</div></section>';
+    main.innerHTML = hero + explain + guideBand + workflow + cats + help;
+  }
 
-    var vids = S.pagesIn('videos');
-    var videos = vids.length ? '<section class="container section"><div class="section-head"><div><h2>' + icon('video') + esc(t('home.videosTitle')) + '</h2><p>' + esc(t('home.videosLead')) + '</p></div><a class="link-more" href="' + categoryUrl('videos') + '">' + esc(t('home.seeAll')) + icon('arrowRight') + '</a></div>' +
-      '<div class="video-strip">' + vids.map(videoCard).join('') + '</div></section>' : '';
-
-    var recent = S.publicPages().slice().sort(function (a, b) { return a.updatedAt < b.updatedAt ? 1 : -1; }).slice(0, 6);
-    var updates = '<section class="container section"><div class="section-head"><div><h2>' + icon('history') + esc(t('home.updatesTitle')) + '</h2></div></div><ul class="updates">' +
-      recent.map(function (p) {
-        var cat = S.category(p.category);
-        return '<li><a href="' + articleUrl(p.id) + '"><span class="upd-title">' + esc(title(p)) + '</span><span class="upd-cat">' + esc(cat ? L(cat, 'title') : '') + '</span></a><span class="upd-meta">' + avatar(p.updatedBy) + esc(S.userName(p.updatedBy)) + ' · <time datetime="' + esc(p.updatedAt) + '" title="' + esc(fmtDateTime(p.updatedAt)) + '">' + esc(relDate(p.updatedAt)) + '</time></span></li>';
-      }).join('') + '</ul></section>';
-
-    main.innerHTML = hero + paths + (mode === 'expert' ? quick + workflow : workflow + quick) + signoff + cats + videos + updates;
+  function renderGuide(main) {
+    document.title = t('nav.guide') + ' · ' + t('brand.name');
+    main.innerHTML = '<div class="tour" id="tour"></div>';
+    if (window.CISTour) window.CISTour.mount(document.getElementById('tour'), lang, mdOpts());
   }
 
   function videoCard(p) {
@@ -374,10 +346,7 @@
         '<span class="badge badge--plain">' + icon('clock') + esc(t('article.readTime', { n: minutes })) + '</span></div>' +
         '<h1>' + esc(c.title) + '</h1>' + (c.summary ? '<p class="lead">' + esc(c.summary) + '</p>' : '') +
         (p.menuPath ? '<p class="menupath">' + icon('map') + '<span class="menupath-label">' + esc(t('article.inCis')) + '</span>' + menuPath(p.menuPath) + '</p>' : '') +
-        '<div class="article-meta">' + avatar(p.updatedBy) + '<span>' + t('article.updated', { date: '<time datetime="' + esc(p.updatedAt) + '">' + esc(fmtDate(p.updatedAt)) + '</time>', user: '<strong>' + esc(S.userName(p.updatedBy)) + '</strong>' }) + '</span>' +
-          '<span class="meta-actions"><button type="button" class="link-btn" data-action="history">' + icon('history') + esc(t('article.history', { n: p.revisions.length })) + '</button>' +
-          (visible(vid) ? '<a class="link-btn" href="' + articleUrl(vid.id) + '">' + icon('video') + esc(t('article.watchVideo')) + '</a>' : '') +
-          '<a class="link-btn" href="admin.html#/pages/' + encodeURIComponent(p.id) + '/edit">' + icon('edit') + esc(t('article.edit')) + '</a></span></div>' +
+        '<p class="article-date">' + icon('clock') + esc(t('article.updatedOn', { date: fmtDate(p.updatedAt) })) + '</p>' +
       '</header>' +
       guidedIntro(p, c) + expertCheat(c) +
       '<div class="prose" id="article-body">' + res.html + '</div>' +
@@ -404,8 +373,8 @@
   function expertCheat(c) {
     var q = c.quick || [];
     if (!q.length) return '';
-    return '<section class="cheat only-expert" aria-labelledby="cheat-title"><h2 class="box-title" id="cheat-title">' + icon('zap') + esc(t('article.cheat')) + '</h2><ol class="cheat-list">' +
-      q.map(function (s) { return '<li><span>' + MD.inline(s, mdOpts()) + '</span></li>'; }).join('') + '</ol></section>';
+    return '<details class="cheat"><summary>' + icon('zap') + esc(t('article.cheat')) + '</summary><ol class="cheat-list">' +
+      q.map(function (s) { return '<li><span>' + MD.inline(s, mdOpts()) + '</span></li>'; }).join('') + '</ol></details>';
   }
   function articleFoot(p, prev, next, wfNext) {
     var fb = S.pref('fb:' + p.id);
@@ -836,8 +805,8 @@
   function render() {
     applyPrefs();
     _index = null;
-    var main = shell(page !== 'home');
-    var fn = { home: renderHome, article: renderArticle, category: renderCategory, search: renderSearch, glossary: renderGlossary }[page] || renderHome;
+    var main = shell(page !== 'home' && page !== 'guide');
+    var fn = { home: renderHome, article: renderArticle, category: renderCategory, search: renderSearch, glossary: renderGlossary, guide: renderGuide }[page] || renderHome;
     fn(main);
     syncMode();
   }

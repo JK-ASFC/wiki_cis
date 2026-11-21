@@ -517,6 +517,7 @@ Why? Only **40.5 marks** out of 100 are linked to a section: aspects in criteria
       objectives: ['Savoir quand verrouiller', 'Savoir ce que le verrouillage bloque', 'Vérifier que le barème est verrouillé'],
       quick: [
         'Avant : barème = 100, WSOS vérifiés, calculs testés, jours et équipes saisis',
+        '**Accord des Team Leaders** obligatoire avant verrouillage',
         'Verrouillage : bouton **Lock Marking Scheme** (selon vos droits) ou CIS Master',
         'Contrôle : accueil › **Marking Scheme Locked = Yes**',
         'Après : plus d’import ni de modification',
@@ -532,11 +533,15 @@ Why? Only **40.5 marks** out of 100 are linked to a section: aspects in criteria
 3. Les **calculs** sont posés et testés ([[marking-types]]).
 4. Chaque sous-critère a un **jour** et une **équipe** ([[marking-days]], [[marking-team]]).
 5. Une feuille *Marking scheme* a été imprimée et **relue** par l'équipe ([[marking-forms]]).
+6. **Les Team Leaders ont vérifié le barème et donné leur accord.** Envoyez-leur le PDF *Marking scheme* et l'export Excel.
 :::
 
 ## Verrouiller
 
-Selon les droits de votre compte, le bouton **Lock Marking Scheme** apparaît sur la page **Marking Scheme** › **Marking Scheme**. Sur les compétitions WorldSkills France, le verrouillage est souvent fait par le **CIS Master** après la validation du barème par l'équipe (voir [[so-marking-scheme|Marking Scheme Acceptance]]).
+Selon les droits de votre compte, le bouton **Lock Marking Scheme** apparaît sur la page **Marking Scheme** › **Marking Scheme**. Sur les compétitions WorldSkills France, le verrouillage est souvent fait par le **CIS Master**, une fois le barème relu par l'équipe **et validé par les Team Leaders**.
+
+> [!IMPORTANT] Toujours faire vérifier par les Team Leaders
+> Ne verrouillez **jamais** sans l'accord des Team Leaders : ils contrôlent les points, la répartition WSOS et les calculs. Après verrouillage, toute correction demande un déverrouillage et une signature.
 
 > [!NOTE] Compte Expert de la base de formation
 > Avec un compte Expert, nous n'avons pas trouvé de bouton de verrouillage : demandez au CIS Master de verrouiller votre métier.
@@ -565,6 +570,7 @@ Sur la page d'accueil, la ligne **Marking Scheme Locked** passe à **Yes** (vert
       objectives: ['Know when to lock', 'Know what locking blocks', 'Check that the marking scheme is locked'],
       quick: [
         'Before: scheme = 100, WSOS checked, calculations tested, days and teams set',
+        '**Team Leaders’ approval** required before locking',
         'Locking: **Lock Marking Scheme** button (depending on rights) or CIS Master',
         'Check: home › **Marking Scheme Locked = Yes**',
         'After: no more import or editing',
@@ -580,11 +586,15 @@ Sur la page d'accueil, la ligne **Marking Scheme Locked** passe à **Yes** (vert
 3. **Calculations** are set and tested ([[marking-types]]).
 4. Every sub-criterion has a **day** and a **team** ([[marking-days]], [[marking-team]]).
 5. A *Marking scheme* form was printed and **proofread** by the team ([[marking-forms]]).
+6. **The Team Leaders have checked the marking scheme and approved it.** Send them the *Marking scheme* PDF and the Excel export.
 :::
 
 ## Lock
 
-Depending on your account rights, the **Lock Marking Scheme** button appears on **Marking Scheme** › **Marking Scheme**. At WorldSkills France competitions, locking is often done by the **CIS Master** after the team has approved the marking scheme (see [[so-marking-scheme|Marking Scheme Acceptance]]).
+Depending on your account rights, the **Lock Marking Scheme** button appears on **Marking Scheme** › **Marking Scheme**. At WorldSkills France competitions, locking is often done by the **CIS Master**, once the marking scheme has been proofread by the team **and approved by the Team Leaders**.
+
+> [!IMPORTANT] Always have the Team Leaders check it
+> **Never** lock without the Team Leaders' approval: they check marks, WSOS distribution and calculations. After locking, any correction requires unlocking and a signature.
 
 > [!NOTE] Expert account on the training database
 > With an Expert account we found no lock button: ask the CIS Master to lock your skill.

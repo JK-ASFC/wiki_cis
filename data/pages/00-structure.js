@@ -40,10 +40,7 @@
     { id: 'aide', order: 6, icon: 'info', color: 'rose',
       fr: { title: 'Aide et dépannage', desc: 'Les messages du CIS expliqués et les questions fréquentes.' },
       en: { title: 'Help and troubleshooting', desc: 'CIS messages explained and frequently asked questions.' } },
-    { id: 'signoff', order: 7, icon: 'signature', color: 'teal',
-      fr: { title: 'Signatures CNAT 48', desc: 'L’outil de signature dématérialisé de la Compétition Nationale Marseille 2025.' },
-      en: { title: 'CNAT 48 sign-off', desc: 'The digital sign-off tool of the Marseille 2025 National Competition.' } },
-    { id: 'videos', order: 8, icon: 'video', color: 'rose',
+    { id: 'videos', order: 7, icon: 'video', color: 'rose',
       fr: { title: 'Vidéos', desc: 'Des tutoriels vidéo (CIS 5) pour chaque étape de la notation.' },
       en: { title: 'Videos', desc: 'Video tutorials (CIS 5) for each marking step.' } }
   ];

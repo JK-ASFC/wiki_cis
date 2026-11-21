@@ -40,7 +40,8 @@ Le prototype peut aussi être publié tel quel avec **GitHub Pages** (Settings �
 
 | Écran | Fichier | Rôle |
 |---|---|---|
-| Accueil | `index.html` | Recherche, parcours débutant / expert, 8 étapes de notation, signatures CNAT 48, vidéos |
+| Accueil | `index.html` | Message de bienvenue, explication directe, accès au guide pas à pas, parcours en 8 étapes, rubriques |
+| Guide pas à pas | `guide.html` | 54 étapes illustrées (captures du CIS v6, zone surlignée + flèche), de l'Excel au verrouillage |
 | Page | `article.html?id=…` | Contenu, aide-mémoire (Expert), « Avant de commencer » (Guidé), sommaire, historique |
 | Catégorie | `category.html?id=…` | Pages d'une catégorie, filtre par niveau |
 | Recherche | `search.html?q=…` | Recherche plein texte (aussi via **Ctrl + K** sur toutes les pages) |
@@ -83,7 +84,9 @@ Connexion de démonstration sans mot de passe (choix du compte). Fonctionnalité
 index.html, article.html, category.html, search.html, glossary.html   site public
 admin.html                                                            administration
 apercu.html                                                           vue d'ensemble du projet
-data/content.js        base : paramètres, utilisateurs, glossaire, pages Signatures / Vidéos / archives
+data/content.js        base : paramètres, utilisateurs, glossaire, pages Vidéos / archives
+data/tour.js           étapes du guide pas à pas (généré par tools/build_tour.py)
+assets/js/tour.js      moteur du guide pas à pas
 data/pages/00-structure.js  catégories, parcours en 8 étapes, glossaire CIS v6
 data/pages/01…06-*.js  pages CIS v6 par catégorie (prise en main, barème, calculs, organisation, notation, aide)
 data/trades.js         exemples de calcul pour les 57 métiers (7 méthodes, FR/EN)
