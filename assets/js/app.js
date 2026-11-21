@@ -48,7 +48,7 @@
       labels: {
         note: t('md.note'), tip: t('md.tip'), warning: t('md.warning'), important: t('md.important'),
         details: t('md.details'), guided: t('md.guided'), expert: t('md.expert'),
-        screenshot: t('md.screenshot'), zoom: t('md.zoom'), anchor: t('md.anchor')
+        screenshot: t('md.screenshot'), zoom: t('md.zoom'), anchor: t('md.anchor'), simulator: t('md.simulator')
       },
       resolveLink: function (id) {
         var p = S.page(id);
@@ -186,7 +186,7 @@
       '<button class="icon-btn menu-btn" type="button" data-action="open-sidebar" aria-label="' + esc(t('nav.menu')) + '" aria-controls="sidebar" aria-expanded="false">' + icon('menu') + '</button>' +
       '<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">CIS</span><span class="brand-text"><strong>CIS Wiki</strong><small>' + esc(t('brand.sub')) + '</small></span></a>' +
       '<nav class="header-nav" aria-label="' + esc(t('nav.main')) + '">' +
-        nav(categoryUrl('cis'), t('nav.guides'), catId === 'cis' || catId === 'start') +
+        nav(categoryUrl('start'), t('nav.guides'), ['start', 'bareme', 'calculs', 'organisation', 'notation', 'aide'].indexOf(catId) !== -1) +
         nav(categoryUrl('signoff'), t('nav.signoff'), catId === 'signoff') +
         nav(categoryUrl('videos'), t('nav.videos'), catId === 'videos') +
         nav('glossary.html', t('nav.glossary'), page === 'glossary') +
@@ -214,7 +214,7 @@
     S.categories().forEach(function (cat) {
       var pages = S.pagesIn(cat.id);
       if (!pages.length) return;
-      var open = !currentCat || cat.id === currentCat || (currentCat === 'start' && cat.id === 'cis');
+      var open = !currentCat || cat.id === currentCat || (currentCat === 'start' && cat.id === 'bareme');
       html += '<details class="side-group"' + (open ? ' open' : '') + '><summary><span class="side-ico cat--' + esc(cat.color) + '">' + icon(cat.icon) + '</span><span>' + esc(L(cat, 'title')) + '</span>' + icon('chevronDown', 'chev') + '</summary><ul>';
       pages.forEach(function (p) {
         var active = current && current.id === p.id;
@@ -300,13 +300,13 @@
         '<span class="path-icon">' + icon('zap') + '</span><span class="path-tag">' + esc(t('mode.expert')) + '</span><h2>' + esc(t('home.pathExpertTitle')) + '</h2><p>' + esc(t('home.pathExpertText')) + '</p><span class="cta">' + esc(t('home.pathExpertCta')) + icon('arrowRight') + '</span></a>' +
       '</section>';
 
-    var workflow = '<section class="container section" id="workflow"><div class="section-head"><div><h2>' + icon('map') + esc(t('home.workflowTitle')) + '</h2><p>' + esc(t('home.workflowLead')) + '</p></div><a class="link-more" href="' + categoryUrl('cis') + '">' + esc(t('home.seeAll')) + icon('arrowRight') + '</a></div>' +
+    var workflow = '<section class="container section" id="workflow"><div class="section-head"><div><h2>' + icon('map') + esc(t('home.workflowTitle')) + '</h2><p>' + esc(t('home.workflowLead')) + '</p></div><a class="link-more" href="' + articleUrl('decouvrir-le-cis') + '">' + esc(t('home.seeAll')) + icon('arrowRight') + '</a></div>' +
       '<ol class="stepper">' + wf.map(function (x) {
         return '<li class="step step--' + x.phase + '"><a href="' + articleUrl(x.p.id) + '"><span class="step-top"><span class="step-num">' + x.step + '</span><span class="step-phase">' + esc(t('phase.' + x.phase)) + '</span></span>' +
           '<span class="step-icon">' + icon(x.icon) + '</span><strong>' + esc(shortTitle(x.p)) + '</strong><small>' + esc(C(x.p).c.summary) + '</small></a></li>';
       }).join('') + '</ol></section>';
 
-    var quickPages = S.pagesIn('cis').filter(function (p) { return (C(p).c.quick || []).length; });
+    var quickPages = wf.map(function (x) { return x.p; }).filter(function (p) { return (C(p).c.quick || []).length; });
     var quick = '<section class="container section" id="quick"><div class="section-head"><div><h2>' + icon('zap') + esc(t('home.quickTitle')) + '</h2><p>' + esc(t('home.quickLead')) + '</p></div></div><div class="cheat-grid">' +
       quickPages.map(function (p) {
         var c = C(p).c;
@@ -385,6 +385,7 @@
       '</article>' + toc(res.headings) + '</div>';
     main.innerHTML = html;
     highlightTerms(document.getElementById('article-body'));
+    if (window.CISCalc) window.CISCalc.mount(document.getElementById('article-body'), lang);
     initScrollSpy();
     if (location.hash) { var target = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (target) setTimeout(function () { target.scrollIntoView(); }, 0); }
   }

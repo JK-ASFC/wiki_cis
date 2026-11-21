@@ -304,7 +304,7 @@ body[data-mode="expert"] .side-card-title .i { color: var(--expert); }
 .section-head h2 .i { color: var(--primary-text); width: 22px; height: 22px; }
 .section-head p { margin: 4px 0 0; color: var(--text-2); }
 
-.stepper { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; }
+.stepper { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; }
 .step { --ph: var(--phase-before); }
 .step--during { --ph: var(--phase-during); }
 .step--after { --ph: var(--phase-after); }
@@ -441,7 +441,7 @@ kbd.ui { font-family: var(--font); font-size: 13px; font-weight: 600; padding: 2
 .menupath--sm { margin: 0; font-size: 13px; }
 .menupath--sm kbd.ui { font-size: 12px; padding: 1px 6px; }
 .article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 14px; color: var(--text-2); padding: 12px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 28px; }
-.article-meta > span:not(.meta-actions) { flex: 1 1 220px; }
+.article-meta > span:not(.meta-actions):not(.avatar) { flex: 1 1 220px; }
 .meta-actions { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px 16px; }
 
 body[data-mode="guided"] .only-expert, body[data-mode="expert"] .only-guided { display: none !important; }
@@ -656,3 +656,65 @@ dialog::backdrop { background: rgba(8, 12, 24, .6); }
   body[data-mode] .only-guided, body[data-mode] .only-expert { display: block !important; }
   .callout, .intro-box, .cheat { break-inside: avoid; }
 }
+
+/* ==========================================================================
+   Étapes en cartes, simulateur de calcul, exemples par métier
+   ========================================================================== */
+.steps > ol { list-style: none; counter-reset: step; padding: 0; margin: 0 0 1.4em; display: grid; gap: 10px; }
+.steps > ol > li { counter-increment: step; position: relative; padding: 12px 14px 12px 56px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); min-height: 48px; }
+.steps > ol > li::before { content: counter(step); position: absolute; left: 12px; top: 10px; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: var(--on-primary); font-weight: 750; font-size: 15px; display: grid; place-items: center; }
+.steps > ol > li > :last-child { margin-bottom: 0; }
+.steps > ol > li .shot { margin-top: 10px; }
+
+.calc-sim { border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border)); border-radius: var(--radius-lg); background: var(--surface); margin: 0 0 1.6em; overflow: hidden; box-shadow: var(--shadow-sm); }
+.sim-fallback { margin: 0; padding: 14px 16px; color: var(--text-3); }
+.sim-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 12px 16px; background: var(--primary-soft); border-bottom: 1px solid var(--border); }
+.sim-head strong { font-size: 15px; color: var(--primary-text); }
+.sim-head span { flex: 1 1 260px; font-size: 13.5px; color: var(--text-2); }
+.sim-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; }
+.sim-params { margin: 0; border: 0; border-right: 1px solid var(--border); padding: 14px 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.sim-params legend { font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); padding: 14px 0 0; float: left; width: 100%; }
+.sim-field { display: grid; gap: 4px; font-size: 13.5px; color: var(--text-2); }
+.sim-field > span:first-child { font-weight: 600; }
+.calc-sim input[type="text"], .calc-sim select, .trades input, .trades select { font: inherit; font-size: 14px; color: var(--text); background: var(--surface); border: 1px solid var(--border-strong); border-radius: 8px; padding: 6px 9px; min-width: 0; width: 100%; }
+.calc-sim input:focus, .calc-sim select:focus, .trades input:focus, .trades select:focus { outline: 2px solid var(--primary); outline-offset: 1px; border-color: var(--primary); }
+.sim-radios { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 14px; color: var(--text); }
+.sim-radios label, .sim-check { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 14px; color: var(--text); }
+.sim-grid { display: grid; gap: 6px; }
+.sim-grid--2 { grid-template-columns: 1.6fr 1fr; }
+.sim-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sim-colhead { font-size: 12px; font-weight: 650; color: var(--text-3); }
+.sim-values { padding: 14px 16px; min-width: 0; }
+.sim-values table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.sim-values th { text-align: left; font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; color: var(--text-3); padding: 0 6px 6px; }
+.sim-values td { padding: 4px 6px; border-top: 1px solid var(--border); vertical-align: middle; }
+.sim-values td:first-child { width: 2.5em; color: var(--text-3); font-weight: 650; }
+.sim-values .num { text-align: right; width: 38%; }
+.sim-mark { display: block; font-weight: 750; font-variant-numeric: tabular-nums; font-size: 15px; color: var(--ok); }
+.sim-mark--none { color: var(--text-3); font-weight: 500; font-size: 13px; font-style: italic; }
+.sim-bar { display: block; height: 5px; border-radius: 3px; background: var(--surface-3); margin-top: 3px; overflow: hidden; }
+.sim-bar i { display: block; height: 100%; background: var(--ok); border-radius: 3px; transition: width .2s; }
+.sim-note { font-size: 13px; color: var(--warn); background: var(--warn-soft); border-radius: 8px; padding: 8px 10px; margin: 10px 0 0; }
+@media (max-width: 760px) { .sim-body { grid-template-columns: 1fr; } .sim-params { border-right: 0; border-bottom: 1px solid var(--border); } }
+
+.trades { margin: 0 0 1.6em; }
+.trades-filter { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.trades-filter input { max-width: 320px; }
+.trades-count { font-size: 13px; color: var(--text-3); white-space: nowrap; }
+.trades-table th[scope="row"] { font-weight: 650; white-space: nowrap; }
+.trades-pick { display: grid; gap: 6px; max-width: 460px; margin-bottom: 14px; font-weight: 650; font-size: 14.5px; }
+.trades-pick select { font-size: 15.5px; padding: 9px 11px; }
+.trades-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.trade-card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
+.trade-card header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.trade-card header a { font-size: 12.5px; white-space: nowrap; }
+.trade-method { font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; color: var(--primary-text); }
+.trade-aspect { margin: 0; font-weight: 650; font-size: 14.5px; }
+.trade-setting { margin: 0; font-size: 13.5px; color: var(--text-2); }
+.trade-card--empty { background: var(--surface-2); }
+.trade-card--empty .trade-setting { color: var(--text-3); font-style: italic; }
+
+/* Cartes « méthode » sur la page de choix */
+.method-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 0 0 1.4em; }
+.trades .table-wrap { max-height: 440px; overflow-y: auto; }
+.trades .table-wrap thead th { position: sticky; top: 0; background: var(--surface-2); z-index: 1; }

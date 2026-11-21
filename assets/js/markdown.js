@@ -15,6 +15,9 @@
  *   > [!NOTE] / [!TIP] / [!WARNING] / [!IMPORTANT]   encadrés
  *   | a | b |  + ligne |---|---|        tableaux
  *   :::guided … :::  /  :::expert … ::: contenu réservé à un mode d'affichage
+ *   :::steps … :::                      étapes numérotées en cartes (liste numérotée à l'intérieur)
+ *   ::calc[ranged]{…json…}              simulateur de méthode de calcul (assets/js/calc.js)
+ *   ::trades[ranged] / ::trades[]       exemples par métier (data/trades.js)
  */
 (function (global) {
   'use strict';
@@ -82,7 +85,9 @@
   var IMG_LINE_RE = /^\s*!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)\s*$/;
   var VIDEO_RE = /^\s*::video\[([^\]]*)\]\(([^)\s]+)\)\s*$/;
   var FENCE_RE = /^\s*```/;
-  var CONTAINER_RE = /^\s*:::\s*(guided|expert|details)\b\s*(.*)$/;
+  var CONTAINER_RE = /^\s*:::\s*(guided|expert|details|steps)\b\s*(.*)$/;
+  var CALC_RE = /^\s*::calc\[([a-z]+)\](\{.*\})?\s*$/;
+  var TRADES_RE = /^\s*::trades\[([a-z]*)\]\s*$/;
   var HR_RE = /^\s*(-{3,}|\*{3,}|_{3,})\s*$/;
   var TABLE_SEP_RE = /^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$/;
   var CALLOUT_RE = /^\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION)\]\s*(.*)$/i;
@@ -92,7 +97,7 @@
   function isBlockStart(lines, i) {
     var l = lines[i];
     return HEAD_RE.test(l) || LIST_RE.test(l) || /^\s*>/.test(l) || FENCE_RE.test(l) || CONTAINER_RE.test(l) ||
-      HR_RE.test(l) || IMG_LINE_RE.test(l) || VIDEO_RE.test(l) || /^\s*:::\s*$/.test(l) ||
+      HR_RE.test(l) || IMG_LINE_RE.test(l) || VIDEO_RE.test(l) || CALC_RE.test(l) || TRADES_RE.test(l) || /^\s*:::\s*$/.test(l) ||
       (l.indexOf('|') !== -1 && i + 1 < lines.length && TABLE_SEP_RE.test(lines[i + 1]));
   }
 
@@ -197,6 +202,7 @@
         i++;
         var body = renderBlocks(dedent(inner), opts, ctx);
         if (m[1] === 'details') html += '<details class="md-details"><summary>' + inline(m[2] || opts.labels.details, opts) + '</summary>' + body + '</details>';
+        else if (m[1] === 'steps') html += '<div class="steps">' + body + '</div>';
         else html += '<div class="only-' + m[1] + ' mode-block mode-block--' + m[1] + '"><span class="mode-flag">' + esc(opts.labels[m[1]]) + '</span>' + body + '</div>';
         continue;
       }
@@ -218,6 +224,18 @@
       if ((m = line.match(VIDEO_RE))) {
         html += '<figure class="video"><video controls preload="metadata" src="' + esc(safeUrl(m[2], opts)) + '"></video>' +
           (m[1] ? '<figcaption>' + inline(m[1], opts) + '</figcaption>' : '') + '</figure>';
+        i++; continue;
+      }
+
+      if ((m = line.match(CALC_RE))) {
+        var cfg = '{}';
+        if (m[2]) { try { cfg = JSON.stringify(JSON.parse(m[2])); } catch (e) { cfg = '{}'; } }
+        html += '<div class="calc-sim" data-calc="' + esc(m[1]) + '" data-config="' + esc(cfg) + '"><p class="sim-fallback">' + esc(opts.labels.simulator || 'Simulator') + '</p></div>';
+        i++; continue;
+      }
+
+      if ((m = line.match(TRADES_RE))) {
+        html += '<div class="trades" data-trades="1"' + (m[1] ? ' data-method="' + esc(m[1]) + '"' : '') + '></div>';
         i++; continue;
       }
 
@@ -296,6 +314,7 @@
   function toPlain(md) {
     return String(md || '')
       .replace(/^\s*:::.*$/gm, ' ')
+      .replace(/^\s*::(calc|trades)\[.*$/gm, ' ')
       .replace(/^\s*::video\[([^\]]*)\]\([^)]*\)/gm, '$1')
       .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
       .replace(/\[\[[a-z0-9-]+\|([^\]]+)\]\]/g, '$1')

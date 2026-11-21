@@ -344,7 +344,7 @@
       d = clone(src);
       delete d.revisions; delete d.deleted;
     } else {
-      d = { id: '', category: q.get('cat') || 'cis', order: 99, step: null, level: 'beginner', status: 'draft', menuPath: '', prereq: [], video: '', tags: [], fr: emptyLang(), en: emptyLang() };
+      d = { id: '', category: q.get('cat') || 'bareme', order: 99, step: null, level: 'beginner', status: 'draft', menuPath: '', prereq: [], video: '', tags: [], fr: emptyLang(), en: emptyLang() };
     }
     S.LANGS.forEach(function (l) { d[l] = Object.assign(emptyLang(), d[l] || {}); });
     var cur = q.get('lang') === 'en' ? 'en' : 'fr';
@@ -461,6 +461,7 @@
         var c = d[cur];
         preview.innerHTML = (c.title ? '<h1 class="pv-title">' + esc(c.title) + '</h1>' : '') + (c.summary ? '<p class="lead">' + esc(c.summary) + '</p>' : '') +
           (MD.render(fBody.value, mdOpts()).html || '<p class="empty">' + esc(t('adm.editor.emptyPreview')) + '</p>');
+        if (window.CISCalc) window.CISCalc.mount(preview, cur);
       }, 120);
     }
     function setDirty(v) { dirty = v; var fl = document.getElementById('dirty-flag'); if (fl) fl.hidden = !v; }

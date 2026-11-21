@@ -38,9 +38,9 @@
       'home.title': 'Préparer, noter et clôturer une compétition, pas à pas.',
       'home.lead': 'Le wiki du Competition Information System de WorldSkills France : guides, vidéos et aide-mémoire, en français et en anglais.',
       'home.popular': 'Populaire :',
-      'home.pathGuidedTitle': 'Je découvre le CIS', 'home.pathGuidedText': 'Un parcours guidé en 7 étapes, avec explications, captures d’écran et vocabulaire.', 'home.pathGuidedCta': 'Commencer le parcours',
+      'home.pathGuidedTitle': 'Je découvre le CIS', 'home.pathGuidedText': 'Un parcours guidé en 8 étapes, avec explications, captures d’écran et vocabulaire.', 'home.pathGuidedCta': 'Commencer le parcours',
       'home.pathExpertTitle': 'Je connais déjà le CIS', 'home.pathExpertText': 'Aide-mémoire, chemins de menus, raccourcis et règles de calcul, sans détour.', 'home.pathExpertCta': 'Accès rapide',
-      'home.workflowTitle': 'Le parcours de notation', 'home.workflowLead': 'Sept étapes, de la préparation du barème jusqu’aux résultats.',
+      'home.workflowTitle': 'Le parcours de notation', 'home.workflowLead': 'Huit étapes, de la préparation du barème jusqu’aux résultats.',
       'home.signoffTitle': 'Signatures CNAT 48', 'home.signoffLead': 'Les étapes à valider chaque jour dans l’outil de signature.',
       'home.quickTitle': 'Aide-mémoire', 'home.quickLead': 'L’essentiel de chaque étape, en un coup d’œil.',
       'home.categoriesTitle': 'Toute la documentation', 'home.videosTitle': 'Vidéos', 'home.videosLead': 'Des tutoriels courts pour chaque étape (en français).',
@@ -71,7 +71,7 @@
 
       'md.note': 'Remarque', 'md.tip': 'Astuce', 'md.warning': 'Attention', 'md.important': 'Important', 'md.details': 'Détails',
       'md.guided': 'Pour bien démarrer', 'md.expert': 'Pour les experts', 'md.screenshot': 'Capture d’écran',
-      'md.zoom': 'Agrandir l’image', 'md.anchor': 'Lien vers cette section',
+      'md.zoom': 'Agrandir l’image', 'md.anchor': 'Lien vers cette section', 'md.simulator': 'Simulateur interactif (JavaScript requis)',
 
       'footer.about': 'Le wiki du Competition Information System (CIS) de WorldSkills France : guides de notation, outil de signature et vidéos.',
       'footer.links': 'Liens utiles', 'footer.cis': 'Accéder au CIS', 'footer.signoffTool': 'Outil de signature', 'footer.contact': 'Contact',
@@ -246,9 +246,9 @@
       'home.title': 'Prepare, mark and close a competition, step by step.',
       'home.lead': 'The WorldSkills France Competition Information System wiki: guides, videos and cheat sheets, in English and French.',
       'home.popular': 'Popular:',
-      'home.pathGuidedTitle': 'I’m new to the CIS', 'home.pathGuidedText': 'A guided path in 7 steps, with explanations, screenshots and vocabulary.', 'home.pathGuidedCta': 'Start the path',
+      'home.pathGuidedTitle': 'I’m new to the CIS', 'home.pathGuidedText': 'A guided path in 8 steps, with explanations, screenshots and vocabulary.', 'home.pathGuidedCta': 'Start the path',
       'home.pathExpertTitle': 'I already know the CIS', 'home.pathExpertText': 'Cheat sheets, menu paths, shortcuts and calculation rules, straight to the point.', 'home.pathExpertCta': 'Quick access',
-      'home.workflowTitle': 'The marking path', 'home.workflowLead': 'Seven steps, from preparing the marking scheme to the results.',
+      'home.workflowTitle': 'The marking path', 'home.workflowLead': 'Eight steps, from preparing the marking scheme to the results.',
       'home.signoffTitle': 'CNAT 48 sign-off', 'home.signoffLead': 'The steps to approve each day in the sign-off tool.',
       'home.quickTitle': 'Cheat sheets', 'home.quickLead': 'The essentials of each step, at a glance.',
       'home.categoriesTitle': 'All documentation', 'home.videosTitle': 'Videos', 'home.videosLead': 'Short tutorials for each step (in French).',
@@ -279,7 +279,7 @@
 
       'md.note': 'Note', 'md.tip': 'Tip', 'md.warning': 'Warning', 'md.important': 'Important', 'md.details': 'Details',
       'md.guided': 'Getting started', 'md.expert': 'For experts', 'md.screenshot': 'Screenshot',
-      'md.zoom': 'Enlarge image', 'md.anchor': 'Link to this section',
+      'md.zoom': 'Enlarge image', 'md.anchor': 'Link to this section', 'md.simulator': 'Interactive simulator (requires JavaScript)',
 
       'footer.about': 'The WorldSkills France Competition Information System (CIS) wiki: marking guides, sign-off tool and videos.',
       'footer.links': 'Useful links', 'footer.cis': 'Open the CIS', 'footer.signoffTool': 'Sign-off tool', 'footer.contact': 'Contact',
