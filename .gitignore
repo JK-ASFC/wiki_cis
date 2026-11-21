@@ -1,0 +1,11 @@
+# Réglages locaux de l'éditeur / de Claude Code
+.claude/
+.vscode/
+.idea/
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Exports de contenu faits depuis l'administration
+cis-wiki-*.json

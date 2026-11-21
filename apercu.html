@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vue d'ensemble · Refonte du wiki CIS</title>
+  <meta name="description" content="Vue d'ensemble du prototype de la refonte du wiki CIS : écrans, fonctionnalités, migration DokuWiki et prochaines étapes.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231d4ed8'/%3E%3Ctext x='32' y='41' font-family='Arial,sans-serif' font-size='22' font-weight='800' fill='%23fff' text-anchor='middle'%3ECIS%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&amp;display=swap">
+  <link rel="stylesheet" href="assets/css/style.css?v=1">
+  <style>
+    .ov-hero { padding: 48px 0 32px; border-bottom: 1px solid var(--border); background: radial-gradient(900px 380px at 0% -20%, color-mix(in srgb, var(--primary) 14%, transparent), transparent 60%), var(--bg); }
+    .ov-hero h1 { font-size: clamp(28px, 4.5vw, 44px); letter-spacing: -.02em; margin: 12px 0 10px; line-height: 1.1; }
+    .ov-hero .lead { max-width: 760px; margin: 0; }
+    .ov-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 12px; margin-top: 28px; }
+    .ov-stat { padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+    .ov-stat strong { display: block; font-size: 26px; line-height: 1.1; }
+    .ov-stat span { font-size: 13.5px; color: var(--text-2); }
+    .ov-section { padding-top: 48px; }
+    .ov-section > h2 { display: flex; align-items: center; gap: 10px; font-size: 24px; margin: 0 0 6px; }
+    .ov-section > p { color: var(--text-2); margin: 0 0 18px; max-width: 820px; }
+    .screens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+    .screen { display: flex; flex-direction: column; gap: 4px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); text-decoration: none; color: var(--text); transition: border-color .15s, box-shadow .15s; }
+    .screen:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+    .screen small { font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; color: var(--primary-text); }
+    .screen strong { font-size: 16px; }
+    .screen span { font-size: 14px; color: var(--text-2); }
+    .screen code { font-size: 12px; color: var(--text-3); margin-top: 4px; word-break: break-all; }
+    .screen--adm small { color: var(--expert); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 820px) { .two { grid-template-columns: 1fr; } }
+    .card { padding: 18px 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+    .card h3 { margin: 0 0 10px; display: flex; align-items: center; gap: 8px; font-size: 17px; }
+    .card ul { margin: 0; padding-left: 20px; color: var(--text-2); display: grid; gap: 6px; font-size: 15px; }
+    .card--guided { border-top: 3px solid var(--guided); }
+    .card--expert { border-top: 3px solid var(--expert); }
+    .ov-table { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); position: relative; }
+    .ov-table table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+    .ov-table th, .ov-table td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .ov-table th { background: var(--surface-2); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); }
+    .ov-table tr:last-child td { border-bottom: 0; }
+    .ov-table code { font-family: var(--mono); font-size: 13px; }
+    .todo-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .todo-list li { display: flex; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+    .todo-list li > span:first-child { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; background: var(--warn-soft); color: var(--warn); }
+    .todo-list p { margin: 2px 0 0; color: var(--text-2); font-size: 14.5px; }
+    .roadmap { counter-reset: r; list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .roadmap li { counter-increment: r; display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+    .roadmap li::before { content: counter(r); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; background: var(--primary); color: var(--on-primary); }
+    .roadmap strong { display: block; }
+    .roadmap span { color: var(--text-2); font-size: 14.5px; }
+    .ov-foot { margin: 56px auto 40px; color: var(--text-3); font-size: 13.5px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">CIS</span><span class="brand-text"><strong>CIS Wiki</strong><small>Vue d'ensemble du projet</small></span></a>
+      <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="index.html">Ouvrir le wiki</a>
+      <a class="btn btn--primary btn--sm" href="admin.html">Administration</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="ov-hero">
+      <div class="container">
+        <p class="eyebrow">Prototype · novembre 2026</p>
+        <h1>Refonte du wiki CIS</h1>
+        <p class="lead">Le DokuWiki de <a href="https://cis.worldskills-france.org/wiki/">cis.worldskills-france.org/wiki</a> est entièrement repris dans un site moderne, bilingue, adapté aux débutants comme aux experts, avec une administration simple. Cette page rassemble tous les écrans à tester.</p>
+        <div class="ov-stats">
+          <div class="ov-stat"><strong>26</strong><span>pages : 25 reprises du DokuWiki + 1 nouvelle</span></div>
+          <div class="ov-stat"><strong>2</strong><span>langues complètes : FR et EN</span></div>
+          <div class="ov-stat"><strong>2</strong><span>modes d'affichage : Guidé et Expert</span></div>
+          <div class="ov-stat"><strong>25</strong><span>termes de glossaire bilingues</span></div>
+          <div class="ov-stat"><strong>3</strong><span>rôles : Administration, Rédaction, Traduction</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="ov-section">
+        <h2>Écrans du site public</h2>
+        <p>Chaque lien ouvre l'écran dans l'état décrit. Le choix de langue et de mode est ensuite mémorisé dans le navigateur.</p>
+        <div class="screens">
+          <a class="screen" href="index.html"><small>Accueil</small><strong>Page d'accueil</strong><span>Recherche, deux parcours (débutant / expert), étapes de notation, signatures, vidéos.</span><code>index.html</code></a>
+          <a class="screen" href="article.html?id=marking-days&amp;mode=guided&amp;lang=fr"><small>Page · mode Guidé</small><strong>Marking Days</strong><span>« Avant de commencer », captures visibles, vocabulaire expliqué au survol, étape suivante.</span><code>article.html?id=marking-days&amp;mode=guided</code></a>
+          <a class="screen" href="article.html?id=marking-days&amp;mode=expert&amp;lang=fr"><small>Page · mode Expert</small><strong>Marking Days</strong><span>Aide-mémoire en tête de page, chemin des menus, captures repliées.</span><code>article.html?id=marking-days&amp;mode=expert</code></a>
+          <a class="screen" href="article.html?id=enter-marks&amp;lang=en"><small>Page · anglais</small><strong>Enter Marks</strong><span>La même page en anglais, avec raccourcis clavier.</span><code>article.html?id=enter-marks&amp;lang=en</code></a>
+          <a class="screen" href="article.html?id=marking-types&amp;lang=fr"><small>Page · avancé</small><strong>Marking Types</strong><span>Tableau de synthèse et formules de calcul en tableaux lisibles.</span><code>article.html?id=marking-types</code></a>
+          <a class="screen" href="article.html?id=signoff&amp;lang=fr"><small>Page</small><strong>Outil de signature CNAT 48</strong><span>Étapes de C-2 à C3 sous forme de tableau, liens vers chaque étape.</span><code>article.html?id=signoff</code></a>
+          <a class="screen" href="category.html?id=cis&amp;lang=fr"><small>Catégorie</small><strong>Notation avec le CIS</strong><span>Liste numérotée des étapes, filtre par niveau.</span><code>category.html?id=cis</code></a>
+          <a class="screen" href="category.html?id=videos&amp;lang=fr"><small>Catégorie</small><strong>Vidéos</strong><span>Galerie des 7 tutoriels vidéo.</span><code>category.html?id=videos</code></a>
+          <a class="screen" href="search.html?q=jur%C3%A9&amp;lang=fr"><small>Recherche</small><strong>Recherche plein texte</strong><span>Insensible aux accents, extraits surlignés, filtres par catégorie. Aussi : Ctrl + K partout.</span><code>search.html?q=juré</code></a>
+          <a class="screen" href="glossary.html?lang=fr"><small>Glossaire</small><strong>Glossaire FR / EN</strong><span>Index alphabétique, filtre, traduction de chaque terme.</span><code>glossary.html</code></a>
+        </div>
+      </section>
+
+      <section class="ov-section">
+        <h2>Écrans de l'administration</h2>
+        <p>Connexion de démonstration sans mot de passe : choisissez un compte (par exemple « Marie — Rédaction ») pour voir les modifications signées de son nom.</p>
+        <div class="screens">
+          <a class="screen screen--adm" href="admin.html#/dashboard"><small>Administration</small><strong>Tableau de bord</strong><span>Chiffres clés, activité récente, pages à traduire ou à publier, couverture EN par catégorie.</span></a>
+          <a class="screen screen--adm" href="admin.html#/pages"><small>Pages</small><strong>Liste des pages</strong><span>Recherche, filtres (catégorie, statut, traduction), auteur et dernière modification.</span></a>
+          <a class="screen screen--adm" href="admin.html#/pages/new"><small>Ajout</small><strong>Nouvelle page</strong><span>Éditeur FR / EN, barre d'outils, aperçu en direct, aide-mémoire et objectifs.</span></a>
+          <a class="screen screen--adm" href="admin.html#/pages/enter-marks/edit"><small>Modification</small><strong>Modifier une page</strong><span>Statut, note de révision, classement, prérequis, vidéo associée.</span></a>
+          <a class="screen screen--adm" href="admin.html#/pages/marking-scheme/history"><small>Historique</small><strong>Révisions et comparaison</strong><span>Qui a modifié quoi et quand, différences ligne à ligne, restauration.</span></a>
+          <a class="screen screen--adm" href="admin.html#/trash"><small>Suppression</small><strong>Corbeille</strong><span>Suppression réversible ; suppression définitive réservée à l'administration.</span></a>
+          <a class="screen screen--adm" href="admin.html#/glossary"><small>Glossaire</small><strong>Termes et définitions</strong><span>Ajout, modification et suppression des termes FR / EN.</span></a>
+          <a class="screen screen--adm" href="admin.html#/users"><small>Utilisateurs</small><strong>Comptes et rôles</strong><span>Auteurs, rôles, nombre de pages et de révisions par personne.</span></a>
+          <a class="screen screen--adm" href="admin.html#/activity"><small>Journal</small><strong>Activité</strong><span>Toutes les modifications, filtrables par auteur et par type.</span></a>
+          <a class="screen screen--adm" href="admin.html#/settings"><small>Paramètres</small><strong>Médias et données</strong><span>Adresse des médias, export / import JSON, réinitialisation.</span></a>
+        </div>
+      </section>
+
+      <section class="ov-section">
+        <h2>Débutants et experts</h2>
+        <p>Un sélecteur « Guidé / Expert » dans l'en-tête adapte toutes les pages. Les rédacteurs peuvent aussi écrire des blocs réservés à un mode (<code>:::guided</code> et <code>:::expert</code>).</p>
+        <div class="two">
+          <div class="card card--guided"><h3>Mode Guidé</h3><ul>
+            <li>Encadré « Avant de commencer » : objectifs et pages à lire d'abord.</li>
+            <li>Vocabulaire souligné en pointillés, défini au survol (glossaire).</li>
+            <li>Captures d'écran affichées et agrandissables.</li>
+            <li>Parcours en 7 étapes avec bouton « Étape suivante ».</li>
+            <li>Niveau de chaque page : Débutant, Intermédiaire, Avancé.</li>
+          </ul></div>
+          <div class="card card--expert"><h3>Mode Expert</h3><ul>
+            <li>Aide-mémoire numéroté en haut de chaque page.</li>
+            <li>Chemin exact des menus du CIS (ex. Marking Scheme › Calculations).</li>
+            <li>Captures repliées, ouvertes à la demande.</li>
+            <li>Accueil avec les aide-mémoire de toutes les étapes.</li>
+            <li>Recherche instantanée au clavier : Ctrl + K ou « / ».</li>
+          </ul></div>
+        </div>
+      </section>
+
+      <section class="ov-section">
+        <h2>Avant / après</h2>
+        <div class="ov-table"><table>
+          <thead><tr><th>Sujet</th><th>DokuWiki actuel</th><th>Nouveau wiki</th></tr></thead>
+          <tbody>
+            <tr><td>Langues</td><td>Français uniquement</td><td>Français et anglais (interface et contenu), retour automatique au français si une page n'est pas traduite</td></tr>
+            <tr><td>Navigation</td><td>Liste de liens, page d'accueil = sommaire</td><td>Parcours de notation, catégories, menu latéral, fil d'Ariane, sommaire de page, pages précédente / suivante</td></tr>
+            <tr><td>Recherche</td><td>Recherche DokuWiki</td><td>Recherche instantanée (Ctrl + K), insensible aux accents, glossaire inclus</td></tr>
+            <tr><td>Contenu</td><td>Texte et captures en vrac, avertissements peu visibles</td><td>Encadrés Remarque / Astuce / Attention / Important, galeries, tableaux de formules, touches clavier</td></tr>
+            <tr><td>Mobile, accessibilité</td><td>Thème par défaut</td><td>Responsive jusqu'au téléphone, thème clair / sombre, navigation clavier, textes alternatifs</td></tr>
+            <tr><td>Édition</td><td>Syntaxe DokuWiki, pas de rôles</td><td>Éditeur Markdown avec barre d'outils et aperçu, statut brouillon / publié, rôles, corbeille</td></tr>
+            <tr><td>Traçabilité</td><td>« Last modified by »</td><td>Créateur, dernier auteur, révisions avec note, comparaison, restauration, journal d'activité</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="ov-section">
+        <h2>Correspondance des anciennes pages</h2>
+        <p>Toutes les pages du DokuWiki ont été reprises. Cette table servira aux redirections <code>/wiki/…</code> lors de la mise en production.</p>
+        <div class="ov-table"><table>
+          <thead><tr><th>DokuWiki</th><th>Nouvelle page</th><th>Dernier auteur (DokuWiki)</th></tr></thead>
+          <tbody>
+            <tr><td><code>start</code></td><td><a href="index.html">Accueil</a> + <a href="article.html?id=decouvrir-le-cis">Découvrir le CIS</a> (nouvelle)</td><td>anthony</td></tr>
+            <tr><td><code>sidebar</code></td><td>Menu latéral automatique (catégories)</td><td>marie</td></tr>
+            <tr><td><code>cis_505</code></td><td><a href="article.html?id=cis-505">CIS 5.0.5 : nouveautés</a></td><td>import</td></tr>
+            <tr><td><code>cis_412</code></td><td><a href="article.html?id=cis-412">CIS 4.1.2 : nouveautés (archive)</a></td><td>import</td></tr>
+            <tr><td><code>marking_scheme</code></td><td><a href="article.html?id=marking-scheme">Marking Scheme</a></td><td>marie</td></tr>
+            <tr><td><code>marking_type</code></td><td><a href="article.html?id=marking-types">Marking Types</a></td><td>import</td></tr>
+            <tr><td><code>lock_marking_scheme</code></td><td><a href="article.html?id=lock-marking-scheme">Verrouiller le barème</a></td><td>import</td></tr>
+            <tr><td><code>marking_days</code></td><td><a href="article.html?id=marking-days">Marking Days</a></td><td>import</td></tr>
+            <tr><td><code>marking_team</code></td><td><a href="article.html?id=marking-team">Marking Team</a></td><td>import</td></tr>
+            <tr><td><code>marking_forms</code></td><td><a href="article.html?id=marking-forms">Marking Forms</a></td><td>import</td></tr>
+            <tr><td><code>enter_marks</code></td><td><a href="article.html?id=enter-marks">Saisie des notes</a></td><td>import</td></tr>
+            <tr><td><code>results</code></td><td><a href="article.html?id=results">Résultats</a></td><td>import</td></tr>
+            <tr><td><code>signoff</code></td><td><a href="article.html?id=signoff">Outil de signature</a></td><td>marie</td></tr>
+            <tr><td><code>so_connect</code></td><td><a href="article.html?id=so-connect">Connexion</a></td><td>anthony</td></tr>
+            <tr><td><code>so_competitionstep</code></td><td><a href="article.html?id=so-competition-steps">Étapes de compétition</a></td><td>marie</td></tr>
+            <tr><td><code>so_identity</code></td><td><a href="article.html?id=so-identity">Vérification des identités</a></td><td>marie</td></tr>
+            <tr><td><code>so_markingscheme</code></td><td><a href="article.html?id=so-marking-scheme">Validation du barème</a></td><td>marie</td></tr>
+            <tr><td><code>so_signoff</code></td><td><a href="article.html?id=so-daily-signoff">Émargements</a></td><td>marie</td></tr>
+            <tr><td><code>so_closing</code></td><td><a href="article.html?id=so-closing">Notation du jour</a></td><td>marie</td></tr>
+            <tr><td><code>so_export</code></td><td><a href="article.html?id=so-export">Export PDF</a></td><td>anthony</td></tr>
+            <tr><td><code>videos</code>, <code>videos/*</code> (7)</td><td><a href="category.html?id=videos">Catégorie Vidéos</a> (une page par vidéo)</td><td>alberic</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="ov-section">
+        <h2>Points de contenu à valider</h2>
+        <p>Relevés pendant la migration. Ils sont modifiables directement depuis l'administration.</p>
+        <ul class="todo-list">
+          <li><span>1</span><div><strong>Limite de 2 points</strong><p>La page Marking Scheme indique « un critère ne peut pas faire plus de 2 points » (texte d'origine conservé). Faut-il lire « un aspect » ?</p></div></li>
+          <li><span>2</span><div><strong>Deux corrections dans Marking Types</strong><p>Option <em>Maximum Value</em> : « égale ou <strong>supérieure</strong> » (l'original disait « inférieure », contredit par l'exemple chiffré). Déduction proportionnelle : 0 point à partir de <strong>1 500 mm</strong> (l'original indiquait 1 600 mm, contredit par le tableau).</p></div></li>
+          <li><span>3</span><div><strong>Relecture des traductions anglaises</strong><p>Toutes les pages ont une version anglaise rédigée pendant la refonte : à faire relire par un anglophone du réseau WorldSkills.</p></div></li>
+          <li><span>4</span><div><strong>Légendes des captures</strong><p>Les captures du Marking Days sont numérotées (« capture 1/8 ») : à remplacer par des légendes descriptives.</p></div></li>
+          <li><span>5</span><div><strong>Vidéos en français</strong><p>Les vidéos n'existent qu'en français ; la version anglaise le signale. Des sous-titres anglais seraient un plus.</p></div></li>
+        </ul>
+      </section>
+
+      <section class="ov-section">
+        <h2>Prochaines étapes vers la production</h2>
+        <p>Le prototype fonctionne sans serveur : les modifications de l'administration restent dans le navigateur. La mise en ligne demande les éléments suivants.</p>
+        <ol class="roadmap">
+          <li><div><strong>Serveur et base de données</strong><span>Remplacer <code>assets/js/store.js</code> par une petite API (par exemple PHP 8 + SQLite, compatible avec l'hébergement actuel du DokuWiki). Les fonctions du store gardent la même forme.</span></div></li>
+          <li><div><strong>Authentification réelle</strong><span>Comptes avec mots de passe chiffrés ou connexion unique (SSO), droits vérifiés côté serveur pour chaque rôle.</span></div></li>
+          <li><div><strong>Médias</strong><span>Copier le dossier <code>_media</code> du DokuWiki sur le nouveau serveur et ajouter l'envoi d'images et de vidéos depuis l'éditeur.</span></div></li>
+          <li><div><strong>Redirections</strong><span>Rediriger chaque ancienne adresse <code>/wiki/…</code> vers la nouvelle page (table ci-dessus) pour ne casser aucun lien.</span></div></li>
+          <li><div><strong>Rendu côté serveur</strong><span>Générer le HTML des pages côté serveur pour le référencement et l'affichage sans JavaScript.</span></div></li>
+        </ol>
+      </section>
+
+      <p class="ov-foot">Prototype de refonte · code source dans le dépôt <a href="https://github.com/JK-ASFC/wiki_cis">JK-ASFC/wiki_cis</a> (branche <code>refonte-wiki</code>).</p>
+    </div>
+  </main>
+</body>
+</html>
