@@ -50,40 +50,6 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #06142f; --surface: #0b1d40; --surface-2: #10264f; --surface-3: #18315f;
-    --border: #253050; --border-strong: #37446a;
-    --text: #e8ecf6; --text-2: #b4bed6; --text-3: #8d98b5;
-    --primary: #8fb4e6; --primary-hover: #b3cdf0; --primary-soft: #14305c; --primary-text: #a9c6ee; --on-primary: #04153a;
-    --guided: #8fb1ff; --expert: #b794ff;
-    --ok: #4fd49d; --ok-soft: #0f2c21; --warn: #f4bb55; --warn-soft: #2f2410;
-    --danger: #ff7189; --danger-soft: #3a1520; --info: #8fb1ff; --info-soft: #172648;
-    --note-c: #8fb1ff; --note-bg: #142342; --tip-c: #4fd49d; --tip-bg: #0f2a20;
-    --warning-c: #f4bb55; --warning-bg: #2c2210; --important-c: #ff86b0; --important-bg: #34152a;
-    --lvl-b: #4fd49d; --lvl-b-bg: #0f2c21; --lvl-i: #f4bb55; --lvl-i-bg: #2f2410; --lvl-a: #c4a6ff; --lvl-a-bg: #271c46;
-    --c-blue: #8fb1ff; --c-indigo: #a8b3ff; --c-teal: #5fe0cc; --c-rose: #ff94aa; --c-amber: #f6c15a; --c-green: #7fe3a5;
-    --phase-before: #7aa2ff; --phase-during: #f4bb55; --phase-after: #4fd49d;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4); --shadow: 0 6px 20px rgba(0, 0, 0, .35); --shadow-lg: 0 24px 60px rgba(0, 0, 0, .55);
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #06142f; --surface: #0b1d40; --surface-2: #10264f; --surface-3: #18315f;
-  --border: #253050; --border-strong: #37446a;
-  --text: #e8ecf6; --text-2: #b4bed6; --text-3: #8d98b5;
-  --primary: #8fb4e6; --primary-hover: #b3cdf0; --primary-soft: #14305c; --primary-text: #a9c6ee; --on-primary: #04153a;
-  --guided: #8fb1ff; --expert: #b794ff;
-  --ok: #4fd49d; --ok-soft: #0f2c21; --warn: #f4bb55; --warn-soft: #2f2410;
-  --danger: #ff7189; --danger-soft: #3a1520; --info: #8fb1ff; --info-soft: #172648;
-  --note-c: #8fb1ff; --note-bg: #142342; --tip-c: #4fd49d; --tip-bg: #0f2a20;
-  --warning-c: #f4bb55; --warning-bg: #2c2210; --important-c: #ff86b0; --important-bg: #34152a;
-  --lvl-b: #4fd49d; --lvl-b-bg: #0f2c21; --lvl-i: #f4bb55; --lvl-i-bg: #2f2410; --lvl-a: #c4a6ff; --lvl-a-bg: #271c46;
-  --c-blue: #8fb1ff; --c-indigo: #a8b3ff; --c-teal: #5fe0cc; --c-rose: #ff94aa; --c-amber: #f6c15a; --c-green: #7fe3a5;
-  --phase-before: #7aa2ff; --phase-during: #f4bb55; --phase-after: #4fd49d;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4); --shadow: 0 6px 20px rgba(0, 0, 0, .35); --shadow-lg: 0 24px 60px rgba(0, 0, 0, .55);
-  color-scheme: dark;
-}
 
 /* ---- Base --------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -165,8 +131,6 @@ input::placeholder, textarea::placeholder { color: var(--text-3); }
 .badge--danger { background: var(--danger-soft); color: var(--danger); }
 
 .avatar { --h: 220; width: 28px; height: 28px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 11px; font-weight: 750; letter-spacing: .02em; color: hsl(var(--h) 55% 28%); background: hsl(var(--h) 70% 89%); flex-shrink: 0; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .avatar { color: hsl(var(--h) 80% 86%); background: hsl(var(--h) 35% 26%); } }
-:root[data-theme="dark"] .avatar { color: hsl(var(--h) 80% 86%); background: hsl(var(--h) 35% 26%); }
 
 .cat--blue { --cc: var(--c-blue); } .cat--indigo { --cc: var(--c-indigo); } .cat--teal { --cc: var(--c-teal); }
 .cat--rose { --cc: var(--c-rose); } .cat--amber { --cc: var(--c-amber); } .cat--green { --cc: var(--c-green); }
@@ -723,24 +687,20 @@ dialog::backdrop { background: rgba(8, 12, 24, .6); }
    Charte WorldSkills France — sobre, lisible, pour les débutants
    (inspirée de worldskills-france.org : marine, bleu, or, bande tricolore)
    ========================================================================== */
-:root { --navy: #04153a; --navy-2: #0b2556; --gold: #c1a74a; --gold-soft: #f6f0dc; --wsf-red: #c40030; }
+:root { --navy: #04153a; --navy-2: #0b2556; --gold: #c1a74a; --gold-text: #7a5f12; --gold-soft: #f6f0dc; --wsf-red: #c40030; }
 body { font-size: 17px; line-height: 1.65; }
 h1, h2, h3, h4 { color: var(--navy); font-weight: 700; letter-spacing: 0 !important; }
-:root[data-theme="dark"] h1, :root[data-theme="dark"] h2, :root[data-theme="dark"] h3 { color: var(--text); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) h1, :root:not([data-theme="light"]) h2, :root:not([data-theme="light"]) h3 { color: var(--text); } }
 
 /* Bande tricolore + en-tête blanc avec le logo */
 .tricolor { display: flex; height: 4px; position: sticky; top: 0; z-index: 51; }
 .tricolor i { flex: 1; } .tricolor i:nth-child(1) { background: #1f3f94; } .tricolor i:nth-child(2) { background: #ffffff; } .tricolor i:nth-child(3) { background: #d6283c; }
 .site-header { top: 4px; height: var(--header-h); background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; border-bottom: 1px solid var(--border); box-shadow: 0 1px 0 rgba(4, 21, 58, .04); }
-:root[data-theme="dark"] .site-header { background: var(--surface); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .site-header { background: var(--surface); } }
 .header-inner { gap: 18px; padding: 0 24px; }
 .brand { gap: 14px; }
 .brand-logo { height: 58px; width: auto; display: block; }
 .brand-sep { width: 1px; height: 40px; background: var(--gold); }
 .brand-text strong { font-size: 17px; color: var(--navy); }
-.brand-text small { font-size: 13px; color: var(--gold); font-weight: 700; }
+.brand-text small { font-size: 13px; color: var(--gold-text); font-weight: 700; }
 .header-nav a { font-size: 15.5px; font-weight: 700; color: var(--navy); border-radius: 999px; padding: 8px 14px; }
 .header-nav a:hover { background: var(--surface-2); }
 .header-nav a.active { background: var(--primary-soft); color: var(--primary); }
@@ -774,7 +734,7 @@ h1, h2, h3, h4 { color: var(--navy); font-weight: 700; letter-spacing: 0 !import
 .section-lead { color: var(--text-2); margin: 0 0 18px; }
 .intro3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
 .intro3-item { border-top: 3px solid var(--gold); padding-top: 14px; }
-.intro3-num { font-size: 14px; font-weight: 700; color: var(--gold); }
+.intro3-num { font-size: 14px; font-weight: 700; color: var(--gold-text); }
 .intro3-item h2 { font-size: 21px; margin: 4px 0 8px; }
 .intro3-item p { margin: 0; color: var(--text-2); }
 .guide-band { display: flex; align-items: center; gap: 18px; padding: 22px 24px; border-radius: var(--radius-lg); background: var(--surface-2); border: 1px solid var(--border); text-decoration: none; color: var(--text); }
@@ -845,7 +805,7 @@ details.cheat .cheat-list { margin: 0; padding: 0 16px 14px 40px; }
    ========================================================================== */
 .tour { max-width: 1280px; margin: 0 auto; padding: 28px 24px 0; }
 .tour-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
-.tour-kicker { display: flex; align-items: center; gap: 8px; color: var(--gold); font-weight: 700; margin: 0 0 4px; }
+.tour-kicker { display: flex; align-items: center; gap: 8px; color: var(--gold-text); font-weight: 700; margin: 0 0 4px; }
 .tour-head h1 { font-size: clamp(24px, 3vw, 32px); margin: 0; }
 .tour-progress { display: grid; gap: 6px; min-width: 240px; flex: 0 1 320px; }
 .tour-count { font-weight: 700; color: var(--navy); font-size: 15px; }
@@ -865,7 +825,7 @@ details.cheat .cheat-list { margin: 0; padding: 0 16px 14px 40px; }
 .tc-count { font-size: 12.5px; color: var(--text-3); }
 .tour-ch-select { display: none; }
 .tour-stage { min-width: 0; }
-.tour-chapter { margin: 0 0 10px; font-size: 13.5px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: .05em; }
+.tour-chapter { margin: 0 0 10px; font-size: 13.5px; font-weight: 700; color: var(--gold-text); text-transform: uppercase; letter-spacing: .05em; }
 .tour-shot { margin: 0 0 18px; }
 .tour-frame { max-height: 58vh; overflow: auto; border: 1px solid var(--border-strong); border-radius: var(--radius); background: #fff; }
 .tour-canvas { position: relative; width: 100%; margin: 0 auto; }
@@ -904,3 +864,7 @@ details.cheat .cheat-list { margin: 0; padding: 0 16px 14px 40px; }
   .tour-bubble { font-size: 13px; padding: 7px 10px; }
   .tour-frame { max-height: 52vh; }
 }
+
+/* Pages sans menu latéral : le bandeau d'accueil occupe toute la largeur */
+.layout:not(.layout--sidebar) { max-width: none; }
+html, body { background: #fff; color-scheme: light; }

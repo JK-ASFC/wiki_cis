@@ -25,7 +25,7 @@
   function applyPrefs() {
     var html = document.documentElement;
     html.lang = lang;
-    if (theme === 'system') html.removeAttribute('data-theme'); else html.setAttribute('data-theme', theme);
+    html.removeAttribute('data-theme'); // charte WorldSkills France : toujours en clair, lisible partout
     document.body.setAttribute('data-mode', mode);
   }
 
