@@ -31,8 +31,9 @@ manquante, erreur ou suggestion. Il est envoyé par e-mail à **kjanlin-b@cofom.
 (PHP 8.2 + PHPMailer, SMTP).
 
 - Fichier à remplir : [`config/mail.example.php`](config/mail.example.php) → à copier dans `/etc/wiki-cis/mail.php`.
-- Installation pas à pas (nginx, PHP, HTTPS, tests) : [`docs/deploiement-debian12.md`](docs/deploiement-debian12.md).
-- Configuration nginx prête à l'emploi : [`deploy/nginx-wiki-cis.conf`](deploy/nginx-wiki-cis.conf).
+- **Apache 2 (serveur qui sert déjà `/wiki`)** : plan pas à pas [`docs/installation-apache2.md`](docs/installation-apache2.md), configuration [`deploy/apache-wiki-cis.conf`](deploy/apache-wiki-cis.conf) → wiki sous `/wiki-cis`.
+- nginx : [`docs/deploiement-debian12.md`](docs/deploiement-debian12.md), configuration [`deploy/nginx-wiki-cis.conf`](deploy/nginx-wiki-cis.conf).
+- Pool PHP isolé (les deux) : [`deploy/php-fpm-wiki-cis.conf`](deploy/php-fpm-wiki-cis.conf).
 
 Sans PHP (test local avec `python -m http.server`), le formulaire propose d'envoyer le message depuis la messagerie.
 

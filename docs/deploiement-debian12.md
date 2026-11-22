@@ -1,4 +1,6 @@
-# Installer le wiki CIS sur Debian 12 (avec le formulaire « Votre avis »)
+# Installer le wiki CIS sur Debian 12 avec nginx (avec le formulaire « Votre avis »)
+
+> **Serveur Apache 2 qui sert déjà `/wiki` ?** Suivez plutôt [installation-apache2.md](installation-apache2.md).
 
 Le wiki est un site **statique** (HTML, CSS, JavaScript). Un seul fichier tourne côté serveur :
 `api/feedback.php`, qui envoie les avis par e-mail à **kjanlin-b@cofom.org** via un serveur SMTP.
@@ -192,42 +194,14 @@ Le formulaire peut aussi fonctionner avec un petit service Python (bibliothèque
 ou être désactivé : sans `api/feedback.php`, le formulaire propose automatiquement d'envoyer le message depuis la
 messagerie du visiteur.
 
-## Variante Apache
+## Variante Apache 2
 
-Même principe : Apache transmet uniquement `feedback.php` au **pool isolé** (pas de `mod_php`).
+Voir le plan dédié, testé, pour un serveur Apache qui sert déjà l'ancien wiki sous `/wiki` :
+**[installation-apache2.md](installation-apache2.md)** (nouveau wiki sous `/wiki-cis`, dossier `/var/www/wiki-cis`,
+configuration prête à l'emploi [`deploy/apache-wiki-cis.conf`](../deploy/apache-wiki-cis.conf)).
 
-```bash
-sudo apt install -y apache2 php8.2-fpm php8.2-mbstring libphp-phpmailer
-sudo a2enmod proxy_fcgi headers
-sudo a2dismod php8.2 2>/dev/null || true
-```
-
-Après les étapes 1 à 3 bis, créez un VirtualHost avec `DocumentRoot /var/www/wiki-cis` et :
-
-```apache
-ServerTokens Prod
-ServerSignature Off
-<Directory /var/www/wiki-cis>
-    Options -Indexes
-    AllowOverride None
-    Require all granted
-</Directory>
-<DirectoryMatch "^/var/www/wiki-cis/(config|deploy|docs|tests|tools|\.git)">
-    Require all denied
-</DirectoryMatch>
-<FilesMatch "\.php$">
-    Require all denied
-</FilesMatch>
-<Files "feedback.php">
-    Require all granted
-    <LimitExcept POST>
-        Require all denied
-    </LimitExcept>
-    SetHandler "proxy:unix:/run/php/wiki-cis.sock|fcgi://localhost"
-</Files>
-LimitRequestBody 32768
-Header always unset X-Powered-By
-```
+> Ne désactivez jamais `mod_php` sur un serveur qui héberge aussi DokuWiki : le formulaire du nouveau wiki passe
+> par son propre pool PHP-FPM, les deux cohabitent.
 
 ## Tester sur un PC sans PHP
 

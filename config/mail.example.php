@@ -22,7 +22,7 @@ return [
     'from_name' => 'Wiki CIS',
 
     // Adresse publique du wiki : sert à construire le lien de la page dans le mail.
-    'site_url' => 'https://cis.worldskills-france.org/wiki',
+    'site_url' => 'https://cis.worldskills-france.org/wiki-cis',
 
     'smtp' => [
         // Exemples :
