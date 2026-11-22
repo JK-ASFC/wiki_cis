@@ -45,6 +45,7 @@
       en: { title: 'Videos', desc: 'Video tutorials (CIS 5) for each marking step.' } }
   ];
 
+  S.settings.feedbackEmail = 'kjanlin-b@cofom.org';
   S.settings.popular = ['excel-marking-scheme', 'marking-types', 'calc-ranged-score', 'enter-marks', 'messages-erreurs'];
   S.settings.workflow = [
     { step: 1, page: 'excel-marking-scheme', phase: 'before', icon: 'table' },

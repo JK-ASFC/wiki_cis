@@ -869,3 +869,36 @@ details.cheat .cheat-list { margin: 0; padding: 0 16px 14px 40px; }
 /* Pages sans menu latéral : le bandeau d'accueil occupe toute la largeur */
 .layout:not(.layout--sidebar) { max-width: none; }
 html, body { background: #fff; color-scheme: light; }
+
+/* ==========================================================================
+   Formulaire « Votre avis »
+   ========================================================================== */
+.fb-open { border-color: var(--gold) !important; color: var(--navy) !important; }
+@media (max-width: 1100px) { .fb-open span { display: none; } }
+.pill--gold { border-color: var(--gold); background: var(--gold-soft); cursor: pointer; font: inherit; font-weight: 700; font-size: 14.5px; }
+.fb-report { margin: 10px 0 0; font-size: 15px; color: var(--text-2); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.fb-dialog { width: min(640px, calc(100vw - 24px)); max-height: calc(100vh - 32px); padding: 0; border: 0; border-top: 5px solid var(--gold); border-radius: var(--radius-lg); box-shadow: 0 24px 60px rgba(4, 21, 58, .35); color: var(--text); background: #fff; }
+.fb-dialog::backdrop { background: rgba(4, 21, 58, .55); }
+.fb-form { display: grid; gap: 14px; padding: 22px 24px; }
+.fb-form header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.fb-form h2 { margin: 0; font-size: 22px; }
+.fb-x { border: 0; background: none; font-size: 28px; line-height: 1; color: var(--text-3); cursor: pointer; padding: 0 4px; }
+.fb-lead { margin: 0; color: var(--text-2); }
+.fb-types { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.fb-types legend { font-weight: 700; color: var(--navy); margin-bottom: 8px; padding: 0; }
+.fb-types label { cursor: pointer; }
+.fb-types input { position: absolute; opacity: 0; pointer-events: none; }
+.fb-types span { display: inline-block; padding: 7px 14px; border: 1px solid var(--border-strong); border-radius: 999px; font-size: 15px; }
+.fb-types input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; }
+.fb-types input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
+.fb-page { margin: 0; font-size: 14.5px; color: var(--text-3); }
+.fb-page strong { color: var(--text); }
+.fb-field { display: grid; gap: 6px; font-weight: 700; color: var(--navy); font-size: 15px; }
+.fb-field textarea, .fb-field input { font-weight: 400; width: 100%; }
+.fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.fb-status { margin: 0; min-height: 1.2em; font-size: 15px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.fb-status--ok { color: #1f6b35; font-weight: 700; }
+.fb-status--error { color: #9b0026; }
+.fb-form footer { display: flex; justify-content: flex-end; gap: 10px; }
+@media (max-width: 600px) { .fb-row { grid-template-columns: 1fr; } .fb-form { padding: 18px; } }

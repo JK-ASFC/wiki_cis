@@ -196,6 +196,7 @@
       '</nav>' +
       '<button class="search-trigger" type="button" data-action="open-palette">' + icon('search') + '<span>' + esc(t('search.placeholder')) + '</span><kbd>Ctrl K</kbd></button>' +
       '<div class="header-tools">' +
+        '<button type="button" class="btn btn--ghost btn--sm fb-open" data-feedback-open="avis">' + icon('edit') + '<span>' + esc(t('feedback.open')) + '</span></button>' +
         '<div class="seg seg--lang" role="group" aria-label="' + esc(t('lang.label')) + '">' +
           segBtn('lang', 'fr', 'FR', lang === 'fr', 'Français') + segBtn('lang', 'en', 'EN', lang === 'en', 'English') +
         '</div>' +
@@ -243,6 +244,7 @@
         '<a class="pill" href="' + categoryUrl('start') + '">' + esc(t('nav.guides')) + '</a>' +
         '<a class="pill" href="glossary.html">' + esc(t('nav.glossary')) + '</a>' +
         '<a class="pill" href="' + esc(st.cisUrl) + '" target="_blank" rel="noopener">' + esc(t('footer.cis')) + '</a>' +
+        '<button type="button" class="pill pill--gold" data-feedback-open="avis">' + esc(t('feedback.open')) + '</button>' +
         '<a class="pill" href="mailto:' + esc(st.contact) + '">' + esc(t('footer.contact')) + '</a>' +
       '</nav></div>' +
       '<div class="container footer-note"><span>© WorldSkills France · ' + esc(t('footer.note')) + '</span><a href="mailto:' + esc(st.contact) + '">' + esc(st.contact) + '</a></div></footer>';
@@ -381,7 +383,8 @@
     return '<footer class="article-foot">' +
       (wfNext ? '<a class="next-step only-guided" href="' + articleUrl(wfNext.p.id) + '"><span class="ns-label">' + esc(t('article.nextStep')) + ' · ' + esc(t('home.step', { n: wfNext.step })) + '</span><strong>' + esc(title(wfNext.p)) + '</strong>' + icon('arrowRight', 'ns-arrow') + '</a>' : '') +
       '<div class="feedback" id="feedback">' + (fb ? '<p>' + icon('check') + esc(t('article.thanks')) + '</p>' :
-        '<p>' + esc(t('article.feedback')) + '</p><div class="fb-btns"><button type="button" class="btn btn--ghost btn--sm" data-feedback="1">' + icon('thumbUp') + esc(t('article.yes')) + '</button><button type="button" class="btn btn--ghost btn--sm" data-feedback="0">' + icon('thumbDown') + esc(t('article.no')) + '</button></div>') + '</div>' +
+        '<p>' + esc(t('article.feedback')) + '</p><div class="fb-btns"><button type="button" class="btn btn--ghost btn--sm" data-feedback="1">' + icon('thumbUp') + esc(t('article.yes')) + '</button><button type="button" class="btn btn--ghost btn--sm" data-feedback="0">' + icon('thumbDown') + esc(t('article.no')) + '</button></div>') +
+        '<p class="fb-report">' + esc(t('feedback.missing')) + ' <button type="button" class="link-btn" data-feedback-open="manque">' + icon('edit') + esc(t('feedback.report')) + '</button></p></div>' +
       '<nav class="pager" aria-label="' + esc(t('article.pager')) + '">' +
         (prev ? '<a class="pager-link pager-link--prev" href="' + articleUrl(prev.id) + '"><span>' + icon('arrowLeft') + esc(t('article.prev')) + '</span><strong>' + esc(shortTitle(prev)) + '</strong></a>' : '<span></span>') +
         (next ? '<a class="pager-link pager-link--next" href="' + articleUrl(next.id) + '"><span>' + esc(t('article.next')) + icon('arrowRight') + '</span><strong>' + esc(shortTitle(next)) + '</strong></a>' : '') +
@@ -740,7 +743,9 @@
         var id = params.get('id');
         S.addFeedback(id, el.getAttribute('data-feedback') === '1');
         S.setPref('fb:' + id, el.getAttribute('data-feedback'));
-        document.getElementById('feedback').innerHTML = '<p>' + icon('check') + esc(t('article.thanks')) + '</p>';
+        document.getElementById('feedback').innerHTML = '<p>' + icon('check') + esc(t('article.thanks')) + '</p>' +
+          '<p class="fb-report">' + esc(t('feedback.missing')) + ' <button type="button" class="link-btn" data-feedback-open="manque">' + icon('edit') + esc(t('feedback.report')) + '</button></p>';
+        if (el.getAttribute('data-feedback') === '0' && window.CISFeedback) window.CISFeedback.open('manque');
         return;
       }
       if (el.hasAttribute('data-level')) {

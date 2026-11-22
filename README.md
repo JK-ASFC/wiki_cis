@@ -24,6 +24,18 @@ node tests/calc.test.js      # le simulateur reproduit les 46 cas mesurés dans 
 node tests/content.test.js   # liens internes, images, fichiers et champs FR/EN
 ```
 
+## Formulaire « Votre avis » et installation sur Debian 12
+
+Un bouton **Votre avis** (en-tête, bas de chaque page, pied de page) ouvre un formulaire : avis, information
+manquante, erreur ou suggestion. Il est envoyé par e-mail à **kjanlin-b@cofom.org** par `api/feedback.php`
+(PHP 8.2 + PHPMailer, SMTP).
+
+- Fichier à remplir : [`config/mail.example.php`](config/mail.example.php) → à copier dans `/etc/wiki-cis/mail.php`.
+- Installation pas à pas (nginx, PHP, HTTPS, tests) : [`docs/deploiement-debian12.md`](docs/deploiement-debian12.md).
+- Configuration nginx prête à l'emploi : [`deploy/nginx-wiki-cis.conf`](deploy/nginx-wiki-cis.conf).
+
+Sans PHP (test local avec `python -m http.server`), le formulaire propose d'envoyer le message depuis la messagerie.
+
 ## Lancer le prototype
 
 Aucune installation n'est nécessaire. Depuis le dossier du dépôt :

@@ -9,3 +9,6 @@ Thumbs.db
 
 # Exports de contenu faits depuis l'administration
 cis-wiki-*.json
+
+# Réglages d’envoi des e-mails remplis (contiennent un mot de passe)
+config/mail.php
