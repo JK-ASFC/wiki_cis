@@ -6,8 +6,8 @@
  *        sudo mkdir -p /etc/wiki-cis
  *        sudo cp config/mail.example.php /etc/wiki-cis/mail.php
  * 2. Remplissez les valeurs ci-dessous (serveur SMTP, compte d'envoi, mot de passe).
- * 3. Protégez le fichier (le mot de passe ne doit être lisible que par PHP) :
- *        sudo chown root:www-data /etc/wiki-cis/mail.php
+ * 3. Protégez le fichier (le mot de passe ne doit être lisible que par le pool PHP du wiki) :
+ *        sudo chown root:wikicis /etc/wiki-cis/mail.php
  *        sudo chmod 640 /etc/wiki-cis/mail.php
  *
  * Ne versionnez jamais le fichier rempli (config/mail.php est ignoré par Git).
@@ -36,6 +36,9 @@ return [
         'password' => 'METTRE_LE_MOT_DE_PASSE_ICI',
         'timeout' => 15,
     ],
+
+    // Sites autorisés à envoyer le formulaire (adresse du wiki, sans chemin). Laisser vide pour ne pas filtrer.
+    'allowed_origins' => ['https://cis.worldskills-france.org'],
 
     // Protection contre les abus : nombre maximum d'envois par adresse IP et par heure.
     'rate_limit_per_hour' => 10,

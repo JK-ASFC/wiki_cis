@@ -37,6 +37,19 @@ if (!is_array($config) || empty($config['to']) || empty($config['smtp']['host'])
     reply(500, ['ok' => false, 'error' => 'config']);
 }
 
+// ---- Requête venant bien du wiki ------------------------------------------
+// Un formulaire HTML d'un autre site ne peut pas envoyer de JSON sans autorisation du navigateur :
+// exiger ce type bloque les envois forgés depuis d'autres sites (CSRF).
+if (stripos((string) ($_SERVER['CONTENT_TYPE'] ?? ''), 'application/json') !== 0) {
+    reply(415, ['ok' => false, 'error' => 'format']);
+}
+// Si des origines sont déclarées, un navigateur venant d'un autre site est refusé.
+$origins = array_map(fn ($o) => rtrim((string) $o, '/'), (array) ($config['allowed_origins'] ?? []));
+$origin = rtrim((string) ($_SERVER['HTTP_ORIGIN'] ?? ''), '/');
+if ($origins && $origin !== '' && !in_array($origin, $origins, true)) {
+    reply(403, ['ok' => false, 'error' => 'origin']);
+}
+
 // ---- Lecture et contrôle des données -------------------------------------
 $raw = file_get_contents('php://input', false, null, 0, 20000);
 $in = json_decode($raw ?: '', true);
