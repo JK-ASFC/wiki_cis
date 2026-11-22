@@ -45,6 +45,9 @@ sudo cp /var/www/wiki-cis/config/mail.example.php /etc/wiki-cis/mail.php
 sudo nano /etc/wiki-cis/mail.php
 ```
 
+> **Sans mot de passe (recommandé)** : voir la section « Envoyer sans mot de passe » de
+> [installation-apache2.md](installation-apache2.md#envoyer-sans-mot-de-passe-recommandé) (valable aussi avec nginx).
+
 Renseignez :
 
 | Clé | Exemple | Explication |

@@ -6,7 +6,7 @@
  *        sudo mkdir -p /etc/wiki-cis
  *        sudo cp config/mail.example.php /etc/wiki-cis/mail.php
  * 2. Remplissez les valeurs ci-dessous (serveur SMTP, compte d'envoi, mot de passe).
- * 3. Protégez le fichier (le mot de passe ne doit être lisible que par le pool PHP du wiki) :
+ * 3. Protégez le fichier (lisible seulement par le pool PHP du wiki) :
  *        sudo chown root:wikicis /etc/wiki-cis/mail.php
  *        sudo chmod 640 /etc/wiki-cis/mail.php
  *
@@ -25,16 +25,26 @@ return [
     'site_url' => 'https://cis.worldskills-france.org/wiki-cis',
 
     'smtp' => [
-        // Exemples :
-        //   Microsoft 365 / Outlook : smtp.office365.com, port 587, secure 'tls'
-        //   Gmail / Google Workspace : smtp.gmail.com, port 587, secure 'tls' (mot de passe d'application)
-        //   Relais local (Postfix sur le serveur) : 127.0.0.1, port 25, secure 'none', sans identifiant
-        'host' => 'smtp.office365.com',
-        'port' => 587,
-        'secure' => 'tls',          // 'tls' (STARTTLS, port 587), 'ssl' (port 465) ou 'none'
-        'username' => 'wiki-cis@cofom.org',
-        'password' => 'METTRE_LE_MOT_DE_PASSE_ICI',
+        // ---- Option A (RECOMMANDÉE) : AUCUN MOT DE PASSE --------------------------------------
+        // Microsoft 365 « Direct Send » : le serveur dépose le mail directement dans la messagerie
+        // de cofom.org (possible car le destinataire est dans le même domaine).
+        // Adresse = l'enregistrement MX du domaine (commande : dig +short MX cofom.org).
+        'host' => 'cofom-org.mail.protection.outlook.com',
+        'port' => 25,
+        'secure' => 'tls',          // STARTTLS : la connexion reste chiffrée
+        'username' => '',           // vide = pas d'authentification, donc pas de mot de passe
+        'password' => '',
         'timeout' => 15,
+
+        // ---- Option B : compte d'envoi avec mot de passe ---------------------------------------
+        // À utiliser seulement si l'option A est impossible (port 25 sortant bloqué, Direct Send
+        // désactivé). Prenez un compte DÉDIÉ qui ne sert qu'à envoyer, pas une boîte personnelle.
+        // 'host' => 'smtp.office365.com',
+        // 'port' => 587,
+        // 'secure' => 'tls',
+        // 'username' => 'wiki-cis@cofom.org',
+        // 'password' => 'METTRE_LE_MOT_DE_PASSE_ICI',
+        // 'timeout' => 15,
     ],
 
     // Sites autorisés à envoyer le formulaire (adresse du wiki, sans chemin). Laisser vide pour ne pas filtrer.

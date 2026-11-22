@@ -85,12 +85,56 @@ sudo nano /etc/wiki-cis/mail.php
 | Clé | Valeur pour votre installation |
 |---|---|
 | `to` | `['kjanlin-b@cofom.org']` (déjà rempli) |
-| `from` | le compte d'envoi, par exemple `wiki-cis@cofom.org` |
+| `from` | une adresse `@cofom.org`, par exemple `wiki-cis@cofom.org` |
 | `site_url` | `https://VOTRE-SERVEUR/wiki-cis` |
 | `allowed_origins` | `['https://VOTRE-SERVEUR']` (sans `/wiki-cis`) |
-| `smtp` | serveur, port, sécurité, identifiant et mot de passe du compte d'envoi |
+| `smtp` | voir ci-dessous : de préférence **sans mot de passe** |
 
-Protéger le fichier (seul le pool du wiki peut lire le mot de passe) :
+### Envoyer sans mot de passe (recommandé)
+
+Un mot de passe SMTP ne peut pas être « hashé » : un hash sert à *vérifier* un mot de passe, alors que PHP doit
+*présenter* le vrai mot de passe au serveur de messagerie. Le chiffrer ne sert à rien non plus, car la clé devrait
+être sur le même serveur. La bonne solution est de **ne pas en avoir besoin**.
+
+Comme le destinataire (kjanlin-b@cofom.org) est dans votre domaine, le serveur peut déposer le mail directement
+dans la messagerie de cofom.org, **sans compte ni mot de passe** (Microsoft 365 appelle cela « Direct Send »).
+
+1. Trouver le serveur de messagerie du domaine :
+
+   ```bash
+   sudo apt install -y dnsutils
+   dig +short MX cofom.org
+   ```
+
+   Si la réponse ressemble à `0 cofom-org.mail.protection.outlook.com.`, le domaine est sur Microsoft 365 :
+   c'est la valeur de `host` (sans le `0` ni le point final). Sinon, utilisez le nom renvoyé.
+
+2. Vérifier que le serveur peut sortir sur le port 25 (souvent bloqué chez les hébergeurs) :
+
+   ```bash
+   timeout 5 bash -c '</dev/tcp/cofom-org.mail.protection.outlook.com/25' && echo "port 25 OK" || echo "port 25 BLOQUÉ"
+   ```
+
+3. Dans `/etc/wiki-cis/mail.php`, laisser l'**option A** du modèle :
+   `'host'` = le nom trouvé, `'port' => 25`, `'secure' => 'tls'` (connexion chiffrée), `'username' => ''`, `'password' => ''`.
+   Le fichier ne contient alors **aucun secret**.
+
+4. Pour que les avis n'arrivent pas en courrier indésirable, demander à l'administrateur de la messagerie
+   d'**ajouter l'adresse IP publique du serveur** à l'enregistrement SPF de cofom.org
+   (par exemple `ip4:203.0.113.10`). Si l'administrateur a désactivé « Direct Send » dans Microsoft 365, il peut
+   créer un **connecteur entrant basé sur l'adresse IP** du serveur : même réglage, toujours sans mot de passe.
+
+### Si un mot de passe est inévitable
+
+Si le port 25 est bloqué ou si l'envoi direct est refusé, utilisez l'**option B** du modèle (`smtp.office365.com`,
+port 587) en limitant les risques :
+
+- un **compte dédié** qui ne sert qu'à envoyer (jamais une boîte personnelle) ; avec la double authentification,
+  un « mot de passe d'application » ;
+- le fichier reste hors du site, lisible seulement par le pool du wiki (`root:wikicis`, `640`), jamais dans Git ;
+- en cas de doute, il suffit de **changer le mot de passe de ce compte** : rien d'autre n'est exposé.
+
+Protéger le fichier (seul le pool du wiki peut le lire) :
 
 ```bash
 sudo chown root:wikicis /etc/wiki-cis/mail.php
@@ -188,7 +232,8 @@ sudo certbot --apache -d VOTRE-SERVEUR
 | Formulaire : « L'envoi automatique n'est pas disponible » | pool PHP absent ou socket introuvable | étape 5 ; `ls -l /run/php/wiki-cis.sock` ; `sudo journalctl -u php8.2-fpm` |
 | Réponse `{"ok":false,"error":"config"}` | `/etc/wiki-cis/mail.php` absent ou illisible | étape 4 (droits `root:wikicis` et `640`) |
 | Réponse `{"ok":false,"error":"origin"}` | adresse du site absente de `allowed_origins` | mettre exactement `https://VOTRE-SERVEUR` |
-| Réponse `{"ok":false,"error":"send"}` | le serveur SMTP refuse | identifiants, port, « SMTP AUTH » (Microsoft 365), pare-feu port 587 ; détail : `sudo tail /var/log/wiki-cis/php-error.log` |
+| Réponse `{"ok":false,"error":"send"}` | le serveur de messagerie refuse | sans mot de passe : port 25 sortant, `host` = MX du domaine, adresse `from` en `@cofom.org`, « Direct Send » autorisé ; avec mot de passe : identifiants, « SMTP AUTH », port 587 ; détail : `sudo tail /var/log/wiki-cis/php-error.log` |
+| Le mail arrive en courrier indésirable | IP du serveur absente du SPF de cofom.org | demander l'ajout de l'IP au SPF |
 | L'ancien `/wiki` ne marche plus | `mod_php` désactivé par erreur | `sudo a2enmod php8.2 && sudo systemctl restart apache2` |
 
 Journaux utiles : `/var/log/apache2/error.log`, `/var/log/wiki-cis/php-error.log`, `sudo journalctl -u php8.2-fpm`.
