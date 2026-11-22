@@ -1,6 +1,7 @@
 /*
  * Tests de non-régression du simulateur : chaque cas a été mesuré dans le CIS v6
  * (training_604, métier 155 test_wiki, fenêtre « Test Calculation »).
+ * Règle WorldSkills France : 2 points maximum par aspect, donc Max Mark ≤ 2 dans chaque cas.
  * Lancer : node tests/calc.test.js
  */
 global.window = global;
@@ -9,6 +10,7 @@ const { compute } = window.CISCalc;
 let fail = 0, n = 0;
 function t(name, type, conf, values, expected) {
   n++;
+  if (!(conf.max > 0 && conf.max <= 2)) { fail++; console.log('ÉCHEC', name, ': Max Mark =', conf.max, '(2 points maximum par aspect)'); return; }
   const got = compute(type, conf, values).map(m => m === null ? '' : m.toFixed(2));
   const ok = JSON.stringify(got) === JSON.stringify(expected);
   if (!ok) { fail++; console.log('ÉCHEC', name, '\n  attendu', expected.join(' | '), '\n  obtenu ', got.join(' | ')); }
@@ -18,12 +20,12 @@ const R = (r) => r; // lisibilité
 t('pf', 'passfail', { max: 1.5 }, ['pass', 'fail', 'pass', '', ''], ['1.50', '0.00', '1.50', '', '']);
 // Number Completed
 t('nc1', 'completed', { max: 2, possible: 8 }, [8, 4, 6, 0, 10], ['2.00', '1.00', '1.50', '0.00', '']);
-t('nc2', 'completed', { max: 12, possible: 6 }, [6, 5, 3, 0, 4], ['12.00', '10.00', '6.00', '0.00', '8.00']);
+t('nc2', 'completed', { max: 2, possible: 6 }, [6, 5, 3, 0, 4], ['2.00', '1.67', '1.00', '0.00', '1.33']);
 // Choice
 const ch = [['Conforme', 0], ['Défaut mineur', 0.5], ['Défaut majeur', 1], ['Non réalisé', 2]];
 t('ch-num', 'choice', { max: 2, dtype: 'marks', choices: ch }, ['Conforme', 'Défaut mineur', 'Défaut majeur', 'Non réalisé', ''], ['2.00', '1.50', '1.00', '0.00', '']);
 const chp = [['Conforme', 0], ['Défaut mineur', 25], ['Défaut majeur', 50], ['Absente', 100]];
-t('ch-pct', 'choice', { max: 6.5, dtype: 'percent', choices: chp }, ['Conforme', 'Défaut mineur', 'Défaut majeur', 'Absente', 'Défaut mineur'], ['6.50', '4.88', '3.25', '0.00', '4.88']);
+t('ch-pct', 'choice', { max: 2, dtype: 'percent', choices: chp }, ['Conforme', 'Défaut mineur', 'Défaut majeur', 'Absente', 'Défaut mineur'], ['2.00', '1.50', '1.00', '0.00', '1.50']);
 // Ranged Score
 const rg = { max: 2, target: 800, dtype: 'marks' };
 const V = [800, 803, 797, 805, 795];
@@ -63,7 +65,7 @@ t('ps12', 'percent', P('lowest', '', 120), [30, 50, 60, 90, 45], ['2.00', '1.33'
 t('ps13 égalité', 'percent', P('highest', '', ''), [30, 30, 30, 30, 30], ['2.00', '2.00', '2.00', '2.00', '2.00']);
 t('ps14 vide', 'percent', P('lowest', '', ''), [30, 50, 90, '', 60], ['', '', '', '', '']);
 t('ps15 NA', 'percent', P('lowest', '', ''), [30, 50, 90, 'NA', 60], ['', '', '', '', '']);
-t('ps16', 'percent', { max: 9.5, best: 'lowest', min: 50, max_value: '' }, [40, 50, 80, 120, 200], ['9.50', '9.50', '7.60', '5.07', '0.00']);
+t('ps16', 'percent', { max: 2, best: 'lowest', min: 50, max_value: '' }, [40, 50, 80, 120, 200], ['2.00', '2.00', '1.60', '1.07', '0.00']);
 // Stepped Score Comparison
 const S = (best, basis, interval, deduction, proportional) => ({ max: 2, best, basis, interval, deduction, proportional });
 const H = [1700, 1637, 1587, 1498, 1650];
@@ -74,6 +76,6 @@ t('ss4', 'stepped', S('highest', 'percent', 10, 0.5, true), H, ['2.00', '1.81', 
 t('ss5', 'stepped', S('lowest', 'value', 10, 0.5, false), [120, 125, 130, 141, 160], ['2.00', '2.00', '1.50', '1.00', '0.00']);
 t('ss6', 'stepped', S('lowest', 'value', 10, 0.5, true), [120, 125, 130, 141, 160], ['2.00', '1.75', '1.50', '0.95', '0.00']);
 t('ss7', 'stepped', S('lowest', 'percent', 10, 0.5, false), [120, 125, 132, 145, 200], ['2.00', '2.00', '1.50', '1.00', '0.00']);
-t('ss8', 'stepped', { max: 15, best: 'highest', basis: 'value', interval: 50, deduction: 1, proportional: false }, [1200, 1180, 1130, 1020, 900], ['15.00', '15.00', '14.00', '12.00', '9.00']);
+t('ss8', 'stepped', { max: 2, best: 'highest', basis: 'value', interval: 50, deduction: 0.5, proportional: false }, [1200, 1180, 1130, 1020, 900], ['2.00', '2.00', '1.50', '0.50', '0.00']);
 console.log(fail ? `${fail}/${n} cas en échec` : `OK : ${n} cas conformes au CIS`);
 process.exit(fail ? 1 : 0);
