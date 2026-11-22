@@ -53,7 +53,12 @@ sudo git clone -b refonte-wiki-wkwhp4 https://github.com/JK-ASFC/wiki_cis.git /v
 sudo chown -R root:root /var/www/wiki-cis
 sudo find /var/www/wiki-cis -type d -exec chmod 755 {} \;
 sudo find /var/www/wiki-cis -type f -exec chmod 644 {} \;
+sudo chmod 700 /var/www/wiki-cis      # dossier FERMÉ tant qu'Apache n'est pas configuré (étape 6)
 ```
+
+> **Pourquoi fermer le dossier ?** Si la racine du site Apache est `/var/www`, tout nouveau dossier de
+> `/var/www` est publié immédiatement, sans les protections de l'étape 6 (le dossier `.git` serait lisible).
+> Il sera ouvert à la fin de l'étape 6.
 
 > Le dépôt est privé : `git clone` demande un identifiant GitHub et un **jeton d'accès** (pas le mot de passe),
 > ou utilisez une clé de déploiement. Sans accès Git sur le serveur : téléchargez le ZIP de la branche depuis
@@ -110,6 +115,7 @@ sudo a2enmod proxy_fcgi headers alias
 sudo a2enconf wiki-cis
 sudo apache2ctl configtest            # doit afficher « Syntax OK »
 sudo systemctl reload apache2
+sudo chmod 755 /var/www/wiki-cis      # ouverture du dossier, maintenant protégé par la configuration
 ```
 
 Le fichier [`deploy/apache-wiki-cis.conf`](../deploy/apache-wiki-cis.conf) :
@@ -147,6 +153,7 @@ curl -s -o /dev/null -w "ancien wiki        %{http_code} (attendu 200)\n" $S/wik
 curl -s -o /dev/null -w "nouveau wiki       %{http_code} (attendu 200)\n" $S/wiki-cis/
 curl -s -o /dev/null -w "formulaire en GET  %{http_code} (attendu 403)\n" $S/wiki-cis/api/feedback.php
 curl -s -o /dev/null -w ".git               %{http_code} (attendu 403)\n" $S/wiki-cis/.git/config
+curl -s -o /dev/null -w "documentation      %{http_code} (attendu 403)\n" $S/wiki-cis/docs/installation-apache2.md
 curl -s -o /dev/null -w "config             %{http_code} (attendu 403)\n" $S/wiki-cis/config/mail.example.php
 curl -s -X POST $S/wiki-cis/api/feedback.php -H 'Content-Type: application/json' -H "Origin: $S" \
   -d '{"type":"avis","message":"Test installation Apache","page":"index.html","pageTitle":"Accueil"}'; echo
@@ -167,7 +174,8 @@ sudo certbot --apache -d VOTRE-SERVEUR
 
 - **Sécurité** (PHP, Apache, PHPMailer) : automatiques avec `unattended-upgrades`.
   Vérifier : `sudo dpkg-reconfigure -plow unattended-upgrades` (répondre « Oui »).
-- **Contenu du wiki** : `cd /var/www/wiki-cis && sudo git pull`, puis remettre les droits (étape 2, lignes `find`).
+- **Contenu du wiki** : `cd /var/www/wiki-cis && sudo git pull`, puis remettre les droits (étape 2, lignes `find`,
+  **sans** le `chmod 700` puisque la configuration est déjà active).
 - **Réglages Apache ou PHP du wiki** modifiés dans le dépôt : refaire la copie des étapes 5 et 6.
 
 ## Dépannage
@@ -188,7 +196,8 @@ Journaux utiles : `/var/log/apache2/error.log`, `/var/log/wiki-cis/php-error.log
 ## Revenir en arrière
 
 ```bash
-sudo a2disconf wiki-cis && sudo systemctl reload apache2      # /wiki-cis disparaît, /wiki n'a jamais été touché
+sudo chmod 700 /var/www/wiki-cis                              # ferme immédiatement le dossier
+sudo a2disconf wiki-cis && sudo systemctl reload apache2      # /wiki n'a jamais été touché
 sudo rm /etc/php/8.2/fpm/pool.d/wiki-cis.conf && sudo systemctl restart php8.2-fpm
 ```
 
