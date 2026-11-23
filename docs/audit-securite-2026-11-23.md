@@ -112,3 +112,52 @@ Preferred-Languages: fr, en
   `curl -I http://cis.worldskills-france.org/` (attendu : 301 vers https).
 - Aucun test authentifié (pages derrière connexion), aucun test d'injection sur les formulaires de connexion.
 - Le système (SSH, pare-feu, versions installées) n'a pas été audité : seule la partie web visible depuis Internet.
+
+---
+
+# Volet approfondi (tests actifs) — 23/11/2026
+
+Tests **actifs mais non destructifs** ajoutés à la demande : injection, contournement d'authentification, XSS,
+inclusion de fichier, méthodes d'écriture, endpoints cachés. **Aucune charge destructive** (pas de `DELETE`/`UPDATE`
+SQL, pas de temporisation), **pas de force brute de mot de passe**, volume modéré. C'est votre infrastructure et
+l'objectif est correctif.
+
+## Résultat : aucune faille applicative exploitable trouvée
+
+| Test | Cible | Résultat |
+|---|---|---|
+| Injection SQL (connexion) | formulaire `/signoff` (`username`/`password`) | **sain** : réponses identiques pour `' OR '1'='1`, `'-- -`, `a'`, `a"` ; aucune erreur SQL ; pas de contournement |
+| Contournement d'authentification | pages internes `/signoff` (`dashboard.php`, `competition.php`, `export.php`, `signoff.php`) | **sain** : redirection (302) vers `error.php`/`index.php` sans session, aucun contenu fuité |
+| Inclusion de fichier / traversée | `/signoff/index.php?page=`, `?file=`, `?lang=` | **sain** : paramètres ignorés ; `../../etc/passwd`, `php://filter`, URL distante sans effet |
+| XSS reflété | `/cis2` (`?q`, `?s`), `/signoff` (`?err`), CIS (`?xss`) | **sain** : aucun paramètre réfléchi dans le HTML |
+| Redirection ouverte | CIS `?redirect=` | **sain** : la valeur reste sur le domaine du CIS, pas de redirection externe |
+| Injection d'en-tête Host | `/signoff` (`Host`, `X-Forwarded-Host`) | **sain** : pas d'empoisonnement de redirection |
+| Écriture WebDAV (PUT) | `/`, `/cis2`, `/signoff` (fichier `.txt`) | **sain** : `PUT` d'un fichier refusé (405), rien n'est écrit |
+| Endpoints d'administration / diagnostic | CIS/Jetty : `/jolokia`, `/actuator`, `/metrics`, `WEB-INF/web.xml`, traversées encodées | **sain** : tout en 404, `web.xml` inaccessible |
+| Fichiers sensibles | `db.php`, `login.php`, `*.sql`, `.env`, sauvegardes, `*.map`, `package.json`… sur `/`, `/signoff`, `/cis2` | **sain** : aucun exposé (404) |
+| Fuite d'erreur PHP | `/signoff/includes/queries.php` (GET et POST) | **sain** : 500 **sans** détail (`display_errors` désactivé) ; le fichier reste toutefois atteignable → fermé par le correctif A |
+| TLS / HSTS | tout le site | **sain** : TLS 1.2/1.3 seulement, HSTS sur **toutes** les réponses (y compris JS/CSS) |
+
+## Nouveau constat (faible) et correctif
+
+| # | Gravité | Constat | Correctif | État |
+|---|---|---|---|---|
+| 11 | Faible | `/signoff/` répond **200 à PUT/DELETE/PATCH** : le script PHP ignore la méthode et renvoie la page (aucune écriture possible, mais réponses parasites qui troublent les scanners) | liste blanche de méthodes (`GET POST HEAD OPTIONS`) sur `/var/www` | **ajouté** à `apache-durcissement-global.conf` |
+
+Vérifié sur la réplique : après correctif, `PUT`/`DELETE`/`PATCH` → **403**, `GET`/`POST`/`OPTIONS` inchangés,
+formulaire du wiki et ancien `/wiki` intacts.
+
+## Conclusion
+
+Les trois applications (portail/`cis2`, outil de signature `/signoff`, CIS) sont **bien écrites** côté code :
+pas d'injection, pas de XSS, pas d'inclusion de fichier, pas de contournement de connexion. Les points à corriger
+restent **de configuration serveur** (listes de fichiers, cookies, en-têtes, version affichée), tous couverts par
+`deploy/apache-durcissement-global.conf`. Les seuls risques résiduels à traiter hors Apache sont côté éditeur du CIS
+(identifiant de session dans l'URL, version de Jetty).
+
+> Non testé faute d'accès ou par prudence : zone **authentifiée** de l'outil de signature (une fois connecté :
+> injection SQL sur les écrans internes, références directes à des objets, CSRF sur les actions de signature),
+> robustesse du mot de passe et limitation des tentatives de connexion, et revue du code source. Une revue de
+> `includes/queries.php` (requêtes préparées ?) lèverait le dernier doute sur l'injection SQL : je peux la faire
+> si le code m'est transmis.
+
