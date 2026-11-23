@@ -33,6 +33,7 @@ manquante, erreur ou suggestion. Il est envoyé par e-mail à **kjanlin-b@cofom.
 - Fichier à remplir : [`config/mail.example.php`](config/mail.example.php) → à copier dans `/etc/wiki-cis/mail.php`.
 - **Apache 2 (serveur qui sert déjà `/wiki`)** : plan pas à pas [`docs/installation-apache2.md`](docs/installation-apache2.md), configuration [`deploy/apache-wiki-cis.conf`](deploy/apache-wiki-cis.conf) → wiki sous `/wiki-cis`.
 - nginx : [`docs/deploiement-debian12.md`](docs/deploiement-debian12.md), configuration [`deploy/nginx-wiki-cis.conf`](deploy/nginx-wiki-cis.conf).
+- **Audit de sécurité du 23/11/2026** et correctifs : [`docs/audit-securite-2026-11-23.md`](docs/audit-securite-2026-11-23.md), [`deploy/apache-durcissement-global.conf`](deploy/apache-durcissement-global.conf).
 - Pool PHP isolé (les deux) : [`deploy/php-fpm-wiki-cis.conf`](deploy/php-fpm-wiki-cis.conf).
 
 Sans PHP (test local avec `python -m http.server`), le formulaire propose d'envoyer le message depuis la messagerie.

@@ -181,6 +181,18 @@ sudo sed -i 's/^ServerTokens .*/ServerTokens Prod/; s/^ServerSignature .*/Server
 sudo systemctl reload apache2
 ```
 
+## Étape 6 bis — Durcissement global du serveur (recommandé)
+
+L'audit du 23/11/2026 a relevé des réglages à corriger sur le reste du serveur (listes de fichiers, cookies de
+session, en-têtes). Fichier prêt et testé : [`deploy/apache-durcissement-global.conf`](../deploy/apache-durcissement-global.conf),
+détails dans [audit-securite-2026-11-23.md](audit-securite-2026-11-23.md).
+
+```bash
+sudo cp /var/www/wiki-cis/deploy/apache-durcissement-global.conf /etc/apache2/conf-available/durcissement-cis.conf
+sudo a2enconf durcissement-cis
+sudo apache2ctl configtest && sudo systemctl reload apache2
+```
+
 ## Étape 7 — Vérifier
 
 Dans un navigateur :
